@@ -3,105 +3,489 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>市场现状分析 - 部门分享</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>2025年6月市场趋势分享</title>
     <style>
+        /* 全局重置与基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
-            line-height: 1.7;
-            color: #2c2c2c;
-            font-size: 1.1rem;
+            background: linear-gradient(135deg, #fdf2f8 0%, #f8f4ff 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #374151;
             min-height: 100vh;
         }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2.5rem 2rem;
+
+        /* 导航侧边栏样式 */
+        .nav-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(180deg, #f472b6 0%, #c084fc 100%);
+            z-index: 1000;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
         }
-        
-        .section-title {
-            font-size: 3.2rem;
-            font-weight: 800;
-            color: #c2185b;
-            margin-bottom: 2.5rem;
+
+        .nav-header {
+            padding: 25px 20px;
             text-align: center;
-            background: linear-gradient(45deg, #c2185b, #e91e63);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 4px rgba(194, 24, 91, 0.2);
-            padding-bottom: 1rem;
-            border-bottom: 4px solid #f48fb1;
-            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(45deg, #e91e63, #f48fb1);
-            border-radius: 2px;
+
+        .nav-header h3 {
+            color: white;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 5px;
         }
-        
-        .slide-title {
-            font-size: 2.4rem;
-            font-weight: 700;
-            color: #ad1457;
-            margin: 3rem 0 1.5rem 0;
-            padding: 1rem 1.5rem;
-            background: linear-gradient(135deg, #fff 0%, #fce4ec 100%);
-            border-left: 6px solid #e91e63;
-            border-radius: 0 12px 12px 0;
-            box-shadow: 0 4px 12px rgba(194, 24, 91, 0.15);
-            position: relative;
+
+        .nav-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9em;
         }
-        
-        .slide-title::before {
-            content: '';
-            position: absolute;
-            left: -6px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 0;
-            height: 0;
-            border-top: 8px solid transparent;
-            border-bottom: 8px solid transparent;
-            border-left: 8px solid #e91e63;
+
+        .nav-menu {
+            padding: 20px 0;
         }
-        
-        .content-block {
-            background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
-            border-radius: 16px;
-            padding: 2.5rem;
-            margin-bottom: 2.5rem;
-            box-shadow: 0 8px 32px rgba(194, 24, 91, 0.1);
-            border: 1px solid rgba(248, 187, 208, 0.3);
+
+        .nav-item {
+            display: block;
+            padding: 12px 25px;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            font-size: 0.95em;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-left-color: white;
+        }
+
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-left-color: white;
+            font-weight: 600;
+        }
+
+        .nav-item .emoji {
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+
+        /* 移动端导航切换按钮样式 */
+        .nav-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: #f472b6;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        /* 主内容区域样式 */
+        .main-content {
+            margin-left: 280px;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(244, 114, 182, 0.1);
+        }
+
+        /* 头部样式 */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px;
+            background: linear-gradient(135deg, #f472b6 0%, #c084fc 100%);
+            border-radius: 20px;
+            color: white;
             position: relative;
             overflow: hidden;
         }
-        
-        .content-block::before {
+
+        .header::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #e91e63, #f48fb1, #e91e63);
-            background-size: 200% 100%;
-            animation: shimmer 3s infinite;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
         }
-        
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin: 0;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
         }
-        
+
+        .header p {
+            font-size: 1.3em;
+            margin: 15px 0 0 0;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .share-info {
+            background: rgba(236, 72, 153, 0.1);
+            border: 2px solid #fce7f3;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .share-info h3 {
+            color: #be185d;
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+        }
+
+        /* 章节通用样式 */
+        .section {
+            margin-bottom: 60px;
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(244, 114, 182, 0.08);
+            border-left: 8px solid #f472b6;
+            position: relative;
+            scroll-margin-top: 20px;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #fce7f3 0%, transparent 70%);
+            border-radius: 0 20px 0 100px;
+            pointer-events: none;
+        }
+
+        .section h2 {
+            color: #ec4899;
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section h3 {
+            color: #be185d;
+            font-size: 1.6em;
+            margin: 30px 0 20px 0;
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #fce7f3 0%, #f0f9ff 100%);
+            border-radius: 12px;
+            border-left: 5px solid #ec4899;
+        }
+
+        /* 趋势网格布局 */
+        .trend-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        /* 趋势卡片样式 */
+        .trend-card {
+            background: linear-gradient(135deg, #fdf2f8 0%, #f8fafc 100%);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid #fce7f3;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trend-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ec4899, #c084fc);
+            border-radius: 0 15px 0 100px;
+            opacity: 0.1;
+        }
+
+        .trend-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(244, 114, 182, 0.15);
+            border-color: #ec4899;
+        }
+
+        .trend-card h4 {
+            color: #be185d;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .trend-number {
+            background: linear-gradient(135deg, #ec4899, #c084fc);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1em;
+            box-shadow: 0 4px 15px rgba(244, 114, 182, 0.3);
+        }
+
+        /* 数据高亮显示区域 */
+        .data-highlight {
+            background: linear-gradient(135deg, #fce7f3 0%, #e0e7ff 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px solid #ec4899;
+            box-shadow: 0 5px 20px rgba(244, 114, 182, 0.1);
+        }
+
+        .data-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(236, 72, 153, 0.2);
+        }
+
+        .data-item:last-child {
+            border-bottom: none;
+        }
+
+        .data-value {
+            font-weight: bold;
+            color: #be185d;
+            font-size: 1.1em;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(244, 114, 182, 0.1);
+        }
+
+        /* 案例研究区域 */
+        .case-study {
+            background: linear-gradient(135deg, #f0f9ff 0%, #fdf2f8 100%);
+            border-radius: 20px;
+            padding: 35px;
+            margin: 30px 0;
+            border: 2px solid #bae6fd;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .case-study::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #0ea5e9, #ec4899);
+            border-radius: 50%;
+            opacity: 0.05;
+        }
+
+        /* 策略网格布局 */
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        /* 两栏布局样式 */
+        .two-column-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        /* 策略项样式 */
+        .strategy-item {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #ec4899;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .strategy-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(244, 114, 182, 0.15);
+        }
+
+        /* 标签样式 */
+        .tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #ec4899, #c084fc);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            font-weight: 500;
+            box-shadow: 0 3px 10px rgba(244, 114, 182, 0.3);
+        }
+
+        /* 高亮统计样式 */
+        .highlight-stat {
+            background: linear-gradient(135deg, #ec4899, #c084fc);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+            box-shadow: 0 8px 25px rgba(244, 114, 182, 0.3);
+        }
+
+        .highlight-stat .number {
+            font-size: 2.2em;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .highlight-stat .label {
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+
+        /* 洞察框样式 */
+        .insight-box {
+            background: rgba(99, 102, 241, 0.1);
+            border: 2px solid #c7d2fe;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .insight-box h4 {
+            color: #4338ca;
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+        }
+
+        /* 列表样式 */
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin: 10px 0;
+            position: relative;
+        }
+
+        li::before {
+            content: '▸';
+            color: #ec4899;
+            font-weight: bold;
+            position: absolute;
+            left: -15px;
+        }
+
+        .emoji {
+            font-size: 1.3em;
+            margin-right: 10px;
+        }
+
+        /* 底部样式 */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background: linear-gradient(135deg, #fce7f3 0%, #e0e7ff 100%);
+            border-radius: 20px;
+            color: #be185d;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .nav-sidebar {
+                transform: translateX(-100%);
+            }
+
+            .nav-sidebar.open {
+                transform: translateX(0);
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 70px 20px 20px 20px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2.2em;
+            }
+
+            .trend-grid, .strategy-grid, .two-column-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 滚动行为 */
+        html {
+            scroll-behavior: smooth;
+        }
+
         .trend-section {
             background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
             padding: 2rem;
@@ -132,141 +516,38 @@
             font-weight: 500;
         }
         
-        .data-highlight {
-            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+        .market-data {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .data-card {
+            background: linear-gradient(135deg, #fff 0%, #f5f5f5 100%);
             padding: 1.5rem;
-            border-radius: 10px;
-            margin: 1.5rem 0;
-            border-left: 4px solid #ff9800;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #e91e63;
         }
         
-        .list-item {
-            margin-bottom: 0.8rem;
-            list-style: none;
-            padding-left: 2rem;
-            color: #424242;
-            font-size: 1.1rem;
-            position: relative;
-            font-weight: 500;
+        .data-card .data-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #c2185b;
+            margin-bottom: 0.5rem;
+            background: none;
+            padding: 0;
+            box-shadow: none;
         }
         
-        .list-item::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: #e91e63;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-        
-        .note {
+        .data-label {
             font-size: 1rem;
             color: #666;
-            margin-top: 2rem;
-            text-align: center;
-            font-style: italic;
-            padding: 1rem;
-            background: rgba(248, 187, 208, 0.1);
-            border-radius: 8px;
-        }
-        
-        .image-container {
-            display: flex;
-            justify-content: center;
-            margin: 2.5rem 0;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-        
-        .image-container img {
-            max-width: 85%;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-            margin: 0 auto;
-            transition: transform 0.3s ease;
-        }
-        
-        .image-container img:hover {
-            transform: scale(1.02);
-        }
-        
-        .image-description {
-            font-size: 1rem;
-            color: #757575;
-            margin-top: 1rem;
-            text-align: center;
             font-weight: 500;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 0.8rem 1.5rem;
-            border-radius: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-        
-        .flex-row-images {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin: 2.5rem 0;
-        }
-        
-        .flex-row-images .image-container {
-            margin: 0;
-        }
-        
-        .flex-row-images .image-container img {
-            max-width: 100%;
-        }
-        
-        @media (max-width: 768px) {
-            .flex-row-images {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            font-size: 1rem;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-        }
-        
-        th, td {
-            padding: 1.2rem;
-            text-align: left;
-            border-bottom: 1px solid #f5f5f5;
-        }
-        
-        th {
-            background: linear-gradient(135deg, #e91e63 0%, #f48fb1 100%);
-            color: white;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-        
-        tr:nth-child(even) {
-            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 50%, #fce4ec 100%);
-        }
-        
-        tr:hover {
-            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
-            transition: all 0.3s ease;
-        }
-        
-        .highlight {
-            color: #c2185b;
-            font-weight: 700;
-            padding: 0.2rem 0.4rem;
-            background: rgba(248, 187, 208, 0.2);
-            border-radius: 4px;
-        }
-        
+
         .bullet-point {
             margin-bottom: 1.3rem;
             position: relative;
@@ -310,780 +591,815 @@
             content: '💡';
             margin-right: 0.5rem;
         }
-        
-        .market-data {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-        
-        .data-card {
-            background: linear-gradient(135deg, #fff 0%, #f5f5f5 100%);
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            border-top: 4px solid #e91e63;
-        }
-        
-        .data-value {
-            font-size: 2.2rem;
-            font-weight: 700;
+
+        .highlight {
             color: #c2185b;
-            margin-bottom: 0.5rem;
-        }
-        
-        .data-label {
-            font-size: 1rem;
-            color: #666;
-            font-weight: 500;
+            font-weight: 700;
+            padding: 0.2rem 0.4rem;
+            background: rgba(248, 187, 208, 0.2);
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="section-title">市场现状分析 - 部门分享</h1>
-
-        <!-- Slide 1: 2025年H1淘系平台高增长行业盘点 -->
-        <div class="content-block">
-            <h2 class="slide-title">1. 2025年H1淘系平台高增长行业盘点</h2>
-            
-            <div class="trend-section">
-                <div class="trend-title">核心趋势洞察</div>
-                <div class="trend-content">
-                    2025年上半年淘系平台呈现明显的消费升级与智能化趋势。大家电领域中，净水设备和咖啡机等品质生活类产品增长强劲，反映消费者对健康生活和精致体验的追求。智能设备全面爆发，手环、机器人、飞行器等产品增速均超90%，显示智能生活生态正快速普及。数码影像设备复苏明显，微单镜头增长超350%，表明内容创作经济的蓬勃发展。
-                </div>
-            </div>
-
-            <div class="market-data">
-                <div class="data-card">
-                    <div class="data-value">+174%</div>
-                    <div class="data-label">移动空调增长率</div>
-                </div>
-                <div class="data-card">
-                    <div class="data-value">+353%</div>
-                    <div class="data-label">微单镜头增长率</div>
-                </div>
-                <div class="data-card">
-                    <div class="data-value">+159%</div>
-                    <div class="data-label">智能机器人增长率</div>
-                </div>
-            </div>
-
-            <div class="bullet-point">
-                <p><span class="highlight">大家电趋势：</span>净水器及配件耗材(+46%)、咖啡机及配件耗材辅料(+42%)体现健康品质生活需求；移动空调(+174%)、壁挂洗衣机(+115%)、中央空调(+82%)显示空间优化和舒适度提升的消费趋势。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">智能设备爆发：</span>智能手环(+167%)、智能机器人(+159%)、智能飞行(+96%)全面增长，智能家居生态系统建设进入加速期，消费者对AIoT产品接受度显著提升。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">内容创作经济：</span>微单镜头(+353%)、运动相机/数码摄像机(+156%)、普通数码相机(+144%)强势增长，反映短视频、直播等内容创作需求爆发。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">运动健康生活：</span>自行车整车(+123%)增长强劲，配合骑行装备需求提升，显示消费者对户外运动和健康生活方式的重视。</p>
-            </div>
-
-            <div class="image-container">
-                <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\2025年H1淘系平台高增长行业盘点.png"
-onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=2025年H1淘系平台高增长行业分析图表';" alt="2025年H1淘系平台高增长行业盘点">
-                <div class="image-description">图：2025年H1淘系平台高增长二级行业（亿元规模以上）- 智能化与品质化成主要驱动力</div>
-            </div>
+    <!-- 导航栏 -->
+    <nav class="nav-sidebar" id="navSidebar">
+        <div class="nav-header">
+            <h3>📊 目录导航</h3>
+            <p>快速跳转到指定章节</p>
         </div>
-
-        <!-- Slide 2: 情绪经济多元发展 -->
-        <div class="content-block">
-            <h2 class="slide-title">2. 情绪经济趋势</h2>
-            
-            <div class="trend-section">
-                <div class="trend-title">情绪价值消费崛起</div>
-                <div class="trend-content">
-                    2024年情绪经济进入多元化发展阶段，超四成消费者愿意为情绪价值买单，标志着从功能性消费向体验性消费的重要转变。玩具潮玩行业在天猫618期间表现突出，近百商家破千万销售额，显示IP经济与情绪消费的强力结合。这一趋势反映了消费者对精神层面满足的重视程度不断提升。
-                </div>
-            </div>
-
-            <div class="data-highlight">
-                <strong>核心数据：</strong>天猫618玩具潮玩行业16款单品破千万，近800个单品破百万，彰显情绪经济驱动下的强劲市场活力。
-            </div>
-
-            <div class="bullet-point">
-                <p><span class="highlight">消费心态转变：</span>从理性功能导向转向情感体验导向，消费者越来越重视产品带来的心理满足感和社交价值，愿意为品牌故事、设计美学、情感共鸣付费。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">玩具潮玩领军：</span>作为情绪经济的典型代表，潮玩产品通过IP联名、限量发售、收集属性等方式，成功激发消费者的情感连接和购买欲望。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">多品类渗透：</span>宠物消费全面升级体现"它经济"的情感投射；芳香疗愈产品满足减压需求；相机等功能性产品也因其创作和分享属性受到追捧。</p>
-            </div>
-
-            <div class="key-insight">
-                <div class="key-insight-title">市场洞察</div>
-                情绪经济的发展预示着消费市场正从"有什么买什么"向"想要什么买什么"转变，品牌需要更加注重产品的情感价值塑造和用户体验设计。
-            </div>
-
-            <div class="image-container">
-                <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\天猫618玩具潮玩行业强劲增长.png"
-onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=天猫618玩具潮玩行业增长趋势图';" alt="天猫618玩具潮玩行业强劲增长">
-                <div class="image-description">图：天猫618玩具潮玩行业强劲增长数据 - 情绪经济驱动消费新增长</div>
-            </div>
+        <div class="nav-menu">
+            <a href="#growth-trends" class="nav-item">
+                <span class="emoji">📈</span>2025年H1高增长行业盘点
+            </a>
+            <a href="#emotional-economy" class="nav-item">
+                <span class="emoji">❤️</span>情绪经济趋势
+            </a>
+            <a href="#ip-economy" class="nav-item">
+                <span class="emoji">🎯</span>IP经济增长态势
+            </a>
+            <a href="#home-appliances" class="nav-item">
+                <span class="emoji">🏠</span>家用电器销售表现
+            </a>
+            <a href="#beauty-skincare" class="nav-item">
+                <span class="emoji">✨</span>美容护肤行业综合分析
+            </a>
+            <a href="#perfume-fragrance" class="nav-item">
+                <span class="emoji">🌹</span>香薰香氛产品分析
+            </a>
+            <a href="#personal-care-market" class="nav-item">
+                <span class="emoji">🧴</span>个护市场细分化趋势
+            </a>
+            <a href="#nutrition-health" class="nav-item">
+                <span class="emoji">💊</span>营养保健市场分析
+            </a>
+            <a href="#medical-beauty" class="nav-item">
+                <span class="emoji">💉</span>医美行业分析
+            </a>
+            <a href="#medical-dressing" class="nav-item">
+                <span class="emoji">🩹</span>医用敷料产品趋势
+            </a>
+            <a href="#platform-users" class="nav-item">
+                <span class="emoji">📱</span>各大电商平台用户画像
+            </a>
         </div>
+    </nav>
 
-        <!-- Slide 3: IP经济增长态势 -->
-        <div class="content-block">
-            <h2 class="slide-title">3. IP经济增长态势</h2>
-            
-            <div class="trend-section">
-                <div class="trend-title">IP经济进入成熟发展期</div>
-                <div class="trend-content">
-                    2025年全球IP市场规模预计突破8万亿元，中国作为重要贡献者，正从IP消费大国向IP创造强国转变。跨界融合成为主要特征，不同领域间的深度结合创造了全新的消费场景。盲盒经济也在向高端化转型，从简单的概率商品向艺术收藏品方向发展。
+    <!-- 移动端导航切换按钮 -->
+    <button class="nav-toggle" id="navToggle">☰</button>
+
+    <!-- 主内容区域 -->
+    <div class="main-content">
+        <div class="container">
+            <div class="header">
+                <h1>市场现状分析 - 部门分享</h1>
+                <p>玫瑰品类部门内部资料分享-2025年6月</p>
+            </div>
+
+            <!-- 2025年H1淘系平台高增长行业盘点 -->
+            <div class="section" id="growth-trends">
+                <h2><span class="emoji">📈</span>2025年H1淘系平台高增长行业盘点</h2>
+                
+                <div class="trend-section">
+                    <div class="trend-title">核心趋势洞察</div>
+                    <div class="trend-content">
+                        2025年上半年淘系平台呈现明显的消费升级与智能化趋势。大家电领域中，净水设备和咖啡机等品质生活类产品增长强劲，反映消费者对健康生活和精致体验的追求。智能设备全面爆发，手环、机器人、飞行器等产品增速均超90%，显示智能生活生态正快速普及。数码影像设备复苏明显，微单镜头增长超350%，表明内容创作经济的蓬勃发展。
+                    </div>
+                </div>
+
+                <div class="market-data">
+                    <div class="data-card">
+                        <div class="data-value">+174%</div>
+                        <div class="data-label">移动空调增长率</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">+353%</div>
+                        <div class="data-label">微单镜头增长率</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">+159%</div>
+                        <div class="data-label">智能机器人增长率</div>
+                    </div>
+                </div>
+
+                <div class="bullet-point">
+                    <span class="highlight">大家电趋势：</span>净水器及配件耗材(+46%)、咖啡机及配件耗材辅料(+42%)体现健康品质生活需求；移动空调(+174%)、壁挂洗衣机(+115%)、中央空调(+82%)显示空间优化和舒适度提升的消费趋势。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">智能设备爆发：</span>智能手环(+167%)、智能机器人(+159%)、智能飞行(+96%)全面增长，智能家居生态系统建设进入加速期，消费者对AIoT产品接受度显著提升。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">内容创作经济：</span>微单镜头(+353%)、运动相机/数码摄像机(+156%)、普通数码相机(+144%)强势增长，反映短视频、直播等内容创作需求爆发。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">运动健康生活：</span>自行车整车(+123%)增长强劲，配合骑行装备需求提升，显示消费者对户外运动和健康生活方式的重视。
+                </div>
+
+                <div class="key-insight">
+                    <div class="key-insight-title">商业洞察</div>
+                    智能化与品质化成主要驱动力，消费者愿意为科技含量高、能提升生活品质的产品支付溢价。内容创作设备的爆发反映了创作者经济的蓬勃发展，为相关品牌提供了新的增长机遇。
                 </div>
             </div>
 
-            <div class="market-data">
-                <div class="data-card">
-                    <div class="data-value">8万亿</div>
-                    <div class="data-label">2025年全球IP市场规模（元）</div>
+            <!-- 情绪经济多元发展 -->
+            <div class="section" id="emotional-economy">
+                <h2><span class="emoji">❤️</span>情绪经济趋势</h2>
+                
+                <div class="trend-section">
+                    <div class="trend-title">情绪价值消费崛起</div>
+                    <div class="trend-content">
+                        2024年情绪经济进入多元化发展阶段，超四成消费者愿意为情绪价值买单，标志着从功能性消费向体验性消费的重要转变。玩具潮玩行业在天猫618期间表现突出，近百商家破千万销售额，显示IP经济与情绪消费的强力结合。这一趋势反映了消费者对精神层面满足的重视程度不断提升。
+                    </div>
                 </div>
-                <div class="data-card">
-                    <div class="data-value">70.9%</div>
-                    <div class="data-label">游戏IP产品占比</div>
+
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span>核心数据</span>
+                        <span class="data-value">天猫618玩具潮玩行业16款单品破千万，近800个单品破百万，彰显情绪经济驱动下的强劲市场活力</span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="bullet-point">
-                <p><span class="highlight">市场规模持续扩大：</span>全球IP经济呈现稳健增长态势，中国市场在原创IP开发、授权运营、衍生品开发等方面贡献显著，成为全球IP经济的重要增长引擎。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">跨界融合深化：</span>游戏、动漫、影视、文学等不同内容领域之间的界限日趋模糊，形成了"IP宇宙"概念，一个IP可以在多个领域同时开花结果。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">游戏IP领跑：</span>游戏领域在IP产品中占比高达70.9%，这与游戏用户的高粘性、强互动性以及游戏IP的易衍生特性密切相关。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">盲盒经济升级：</span>从最初的低价位随机商品向高品质艺术收藏品转型，消费者对产品质量、设计美学、收藏价值的要求不断提升。</p>
-            </div>
+                <div class="bullet-point">
+                    <span class="highlight">消费心态转变：</span>从理性功能导向转向情感体验导向，消费者越来越重视产品带来的心理满足感和社交价值，愿意为品牌故事、设计美学、情感共鸣付费。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">玩具潮玩领军：</span>作为情绪经济的典型代表，潮玩产品通过IP联名、限量发售、收集属性等方式，成功激发消费者的情感连接和购买欲望。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">多品类渗透：</span>宠物消费全面升级体现"它经济"的情感投射；芳香疗愈产品满足减压需求；相机等功能性产品也因其创作和分享属性受到追捧。
+                </div>
 
-            <div class="image-container">
-                <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\消费者使用过的IP产品领域分布.png"
-onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=IP产品领域分布趋势图';" alt="消费者使用过的IP产品领域分布">
-                <div class="image-description">图：消费者使用过的IP产品领域分布 - 游戏IP占据主导地位</div>
-            </div>
-        </div>
-
-        <!-- Slide 4: 家用电器销售表现 -->
-        <div class="content-block">
-            <h2 class="slide-title">4. 家用电器销售表现</h2>
-            
-            <div class="trend-section">
-                <div class="trend-title">家电行业智能化与节能化双重驱动</div>
-                <div class="trend-content">
-                    2025年H1家电市场总销售额达1101亿元，行业呈现明显的结构性调整特征。传统大件家电市场趋于饱和，增长重心转向智能化、节能化和细分化产品。小米等新兴品牌凭借性价比优势和生态化布局快速崛起，对传统巨头形成有力挑战。消费者"换优"需求成为市场增长的重要驱动力。
+                <div class="key-insight">
+                    <div class="key-insight-title">市场洞察</div>
+                    情绪经济的发展预示着消费市场正从"有什么买什么"向"想要什么买什么"转变，品牌需要更加注重产品的情感价值塑造和用户体验设计。
                 </div>
             </div>
 
-            <div class="data-highlight">
-                <strong>市场总览：</strong>全网销售总额1101亿元，其中智能化、节能化产品增长最为突出，反映消费升级趋势。
-            </div>
-
-            <div class="bullet-point">
-                <p><span class="highlight">传统品类稳健增长：</span>空调、冰箱等大件家电销售额居前，增速平稳，市场进入存量竞争阶段，品牌竞争更加激烈。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">新兴细分市场爆发：</span>洗烘套装、烘干机、移动空调虽然销售额基数较小，但同比增速亮眼，体现了消费者对便利性和专业化产品的需求增长。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">智能化成主流趋势：</span>智能互联、健康化(抗菌消毒)、绿色化(节能省电)成为产品发展的三大方向，AIoT技术在家电领域的应用日益深入。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">品牌格局重塑：</span>海尔、美的、格力等传统巨头地位稳固，但小米等新兴品牌通过生态化战略快速崛起，空调占比59%，平板电视占比37%，显示其在大家电领域的快速渗透。</p>
-            </div>
-
-            <div class="flex-row-images">
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\2025年H1大家电行业品类销售额分布及同比增速.png"
-    onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=大家电品类销售分析图';" alt="家用电器品类销售额分布及同比增速">
-                    <div class="image-description">图：2025年H1大家电行业品类销售额分布及同比增速</div>
+            <!-- IP经济增长态势 -->
+            <div class="section" id="ip-economy">
+                <h2><span class="emoji">🎯</span>IP经济增长态势</h2>
+                
+                <div class="trend-section">
+                    <div class="trend-title">IP经济进入成熟发展期</div>
+                    <div class="trend-content">
+                        2025年全球IP市场规模预计突破8万亿元，中国作为重要贡献者，正从IP消费大国向IP创造强国转变。跨界融合成为主要特征，不同领域间的深度结合创造了全新的消费场景。盲盒经济也在向高端化转型，从简单的概率商品向艺术收藏品方向发展。
+                    </div>
                 </div>
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\⼤家电⾏业消费者评价声量分布.png"
-    onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=消费者评价声量分析图';" alt="⼤家电⾏业消费者评价声量分布">
-                    <div class="image-description">图：大家电行业消费者评价声量分布 - 智能化成关注焦点</div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Slide 5: 美容护肤行业综合分析 -->
-        <div class="content-block">
-            <h2 class="slide-title">5. 美容护肤行业分析</h2>
-            
-            <div class="trend-section">
-                <div class="trend-title">护肤行业科学化与个性化并进</div>
-                <div class="trend-content">
-                    2025年美容护肤行业进入科学护肤与个性化定制的新阶段。618期间全网销售总额达432亿元，抗衰老成为最大增长驱动力。消费者对成分的认知度显著提升，功效导向的购买决策成为主流。透明质酸、烟酰胺等科学成分体量领先，而红花、薄荷等天然植物成分增速超100%，显示消费者对天然与科学并重的需求特征。
+                <div class="market-data">
+                    <div class="data-card">
+                        <div class="data-value">8万亿</div>
+                        <div class="data-label">2025年全球IP市场规模（元）</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">70.9%</div>
+                        <div class="data-label">游戏IP产品占比</div>
+                    </div>
+                </div>
+
+                <div class="bullet-point">
+                    <span class="highlight">市场规模持续扩大：</span>全球IP经济呈现稳健增长态势，中国市场在原创IP开发、授权运营、衍生品开发等方面贡献显著，成为全球IP经济的重要增长引擎。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">跨界融合深化：</span>游戏、动漫、影视、文学等不同内容领域之间的界限日趋模糊，形成了"IP宇宙"概念，一个IP可以在多个领域同时开花结果。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">游戏IP领跑：</span>游戏领域在IP产品中占比高达70.9%，这与游戏用户的高粘性、强互动性以及游戏IP的易衍生特性密切相关。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">盲盒经济升级：</span>从最初的低价位随机商品向高品质艺术收藏品转型，消费者对产品质量、设计美学、收藏价值的要求不断提升。
                 </div>
             </div>
 
-            <div class="market-data">
-                <div class="data-card">
-                    <div class="data-value">432亿</div>
-                    <div class="data-label">618全网销售总额（元）</div>
-                </div>
-                <div class="data-card">
-                    <div class="data-value">100%+</div>
-                    <div class="data-label">天然成分增速</div>
-                </div>
-                <div class="data-card">
-                    <div class="data-value">60%+</div>
-                    <div class="data-label">抗皱功效增长率</div>
-                </div>
-            </div>
-
-            <div class="bullet-point">
-                <p><span class="highlight">消费关注点聚焦：</span>面部护理套装、液态精华、乳液/面霜成为最受关注品类；保湿功效销售额超1000亿，修护和抗衰紧随其后，显示基础护肤需求依然强劲。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">成分认知升级：</span>透明质酸体量最高，烟酰胺、泛醇等科学成分增长稳定；红花、薄荷等天然植物成分增速超100%，体现消费者对"天然科学"并重的追求。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">功效需求明确化：</span>抗皱、紧致功效销售额增长超60%，80%消费者对抗衰老关注度大幅提升，功效护肤成分认知度日趋成熟。</p>
-            </div>
-
-            <div class="flex-row-images">
-            <div class="image-container">
-                <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\美妆成分分析.png"
-onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=美妆成分分析图表';" alt="美妆成分分析">
-                <div class="image-description">图：美妆成分分析—抗衰老成分表现优异，天然植物成分增速亮眼 (数据来源：魔镜洞察)</div>
-            </div>
-
-            <div class="image-container">
-                <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\护肤功效分析.png"
-onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=护肤功效分析图表';" alt="护肤功效分析">
-                <div class="image-description">图：护肤功效分析—抗皱、紧致销售额销量双增，舒缓、滋养等功效同样值得关注 (数据来源：魔镜洞察)</div>
-            </div>
-
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\消费者关注.png"
-    onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=消费者关注功效分析图';" alt="消费者关注功效">
-                    <div class="image-description">图：消费者关注功效（线上）- 保湿抗衰成核心需求</div>
+            <!-- 家用电器销售表现 -->
+            <div class="section" id="home-appliances">
+                <h2><span class="emoji">🏠</span>家用电器销售表现</h2>
+                
+                <div class="trend-section">
+                    <div class="trend-title">家电行业智能化与节能化双重驱动</div>
+                    <div class="trend-content">
+                        2025年H1家电市场总销售额达1101亿元，行业呈现明显的结构性调整特征。传统大件家电市场趋于饱和，增长重心转向智能化、节能化和细分化产品。小米等新兴品牌凭借性价比优势和生态化布局快速崛起，对传统巨头形成有力挑战。消费者"换优"需求成为市场增长的重要驱动力。
+                    </div>
                 </div>
 
-            <div class="image-container">
-                <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\消费者需求分析.png"
-onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=消费者需求分析图表';" alt="消费者需求分析">
-                <div class="image-description">图：消费者需求分析—抗皱紧致是头等要事，美白保湿成分同样值得关注 </div>
-            </div>
-        </div>
-
-            
-            <div class="trend-section">
-                <div class="trend-title">面膜市场细分化趋势</div>
-                <div class="trend-content">
-                    小红书2025Q1高热度搜索词显示面膜市场正向三大赛道分化：基础修护赛道注重功效性，场景化仪式感赛道强调使用体验，技术流赛道追求科技含量。这种细分化趋势反映了消费者需求的多元化和专业化。
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span>市场总览</span>
+                        <span class="data-value">全网销售总额1101亿元，其中智能化、节能化产品增长最为突出，反映消费升级趋势</span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="image-container">
-                <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\小红书面膜近一季度高热度新概念词.png"
-onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=面膜市场趋势图';" alt="小红书面膜近一季度高热度新概念词">
-                <div class="image-description">图：小红书面膜近一季度高热度新概念词 - 细分化趋势明显</div>
-            </div>
-
-            <div class="trend-section">
-                <div class="trend-title">行业四大发展趋势</div>
-                <div class="trend-content">
-                    美妆行业正经历深度变革，呈现出全民抗衰、纯净美妆、妆械联合、婴童护肤四大核心趋势。这些趋势反映了消费者对产品安全性、功效性、专业性要求的全面提升。
+                <div class="bullet-point">
+                    <span class="highlight">传统品类稳健增长：</span>空调、冰箱等大件家电销售额居前，增速平稳，市场进入存量竞争阶段，品牌竞争更加激烈。
                 </div>
-            </div>
-
-            <div class="bullet-point">
-                <p><span class="highlight">全民抗衰：</span>抗衰需求年轻化明显，精准成分成为增长密码，年轻群体提前介入抗衰护理，推动市场快速扩容。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">纯净美妆：</span>Clean Beauty受年轻群体偏爱，环保可持续成为发展方向，成分透明化、包装环保化成为品牌差异化竞争点。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">妆械联合：</span>跨界医美为品牌提供第二增长点，专业化、医学化成为高端护肤品发展趋势。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">婴童护肤：</span>分龄护肤成差异化趋势，天然成分增强消费者信任感，专业化程度不断提升。</p>
-            </div>
-
-            <div class="flex-row-images">
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\美妆行业四大趋势总结.png"
-    onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=美妆行业趋势总结图';" alt="美妆行业四大趋势总结">
-                    <div class="image-description">图：美妆行业四大趋势总结 - 多元化发展格局</div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">新兴细分市场爆发：</span>洗烘套装、烘干机、移动空调虽然销售额基数较小，但同比增速亮眼，体现了消费者对便利性和专业化产品的需求增长。
                 </div>
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\纯净美妆分析.png"
-    onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=纯净美妆分析图';" alt="纯净美妆分析">
-                    <div class="image-description">图：纯净美妆分析 - 环保理念驱动市场增长</div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">智能化成主流趋势：</span>智能互联、健康化(抗菌消毒)、绿色化(节能省电)成为产品发展的三大方向，AIoT技术在家电领域的应用日益深入。
                 </div>
-            </div>
-        </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">品牌格局重塑：</span>海尔、美的、格力等传统巨头地位稳固，但小米等新兴品牌通过生态化战略快速崛起，空调占比59%，平板电视占比37%，显示其在大家电领域的快速渗透。
+                </div>
 
-        <!-- Slide 6: 香水彩妆市场分析 -->
-        <div class="content-block">
-            <h2 class="slide-title">6. 香水彩妆市场趋势</h2>
-            
-            <div class="trend-section">
-                <div class="trend-title">彩妆功能化与养肤化并进</div>
-                <div class="trend-content">
-                    2025年香水彩妆市场展现出明显的功能性升级趋势。618期间全网销售总额达143亿元，面部彩妆依然是绝对核心，但美甲产品及彩妆套装展现出强劲发展潜力。防晒、防水、隔离等附加功效产品销售额占比高且增长快，养肤防护型彩妆需求凸显，显示消费者对彩妆产品"美妆+护肤"双重功效的期待。
+                <div class="strategy-grid">
+                    <div class="strategy-item">
+                        <h4>消费者关注焦点分析</h4>
+                        <p>消费者对家电产品的关注聚焦于产品质量、便捷性、美观度和性价比维度</p>
+                        <div class="data-highlight">
+                            <div class="data-item">
+                                <span>第一关注点</span>
+                                <span class="data-value">产品质量</span>
+                            </div>
+                            <div class="data-item">
+                                <span>第二关注点</span>
+                                <span class="data-value">便捷性</span>
+                            </div>
+                            <div class="data-item">
+                                <span>第三关注点</span>
+                                <span class="data-value">美观度</span>
+                            </div>
+                            <div class="data-item">
+                                <span>第四关注点</span>
+                                <span class="data-value">性价比</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="strategy-item">
+                        <h4>家电品牌竞争格局</h4>
+                        <p>美的、苏泊尔等领先，腰部品牌竞争激烈</p>
+                        <div class="data-highlight">
+                            <div class="data-item">
+                                <span>1. 美的 Midea</span>
+                                <span class="data-value">1652</span>
+                            </div>
+                            <div class="data-item">
+                                <span>2. 苏泊尔 SUPOR</span>
+                                <span class="data-value">1632</span>
+                            </div>
+                            <div class="data-item">
+                                <span>3. 九阳 Joyoung</span>
+                                <span class="data-value">1611</span>
+                            </div>
+                            <div class="data-item">
+                                <span>4. AUX/奥克斯</span>
+                                <span class="data-value">1609</span>
+                            </div>
+                            <div class="data-item">
+                                <span>5. 格兰仕 Galanz</span>
+                                <span class="data-value">1583</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="data-highlight">
-                <strong>市场亮点：</strong>618全网销售总额143亿元，附加功效彩妆产品增长明显，养肤型彩妆成为新趋势。
-            </div>
-
-            <div class="bullet-point">
-                <p><span class="highlight">品类结构优化：</span>面部彩妆依然是市场核心，但美甲产品及彩妆套装类产品展现出较强发展潜力，品类细分化趋势明显。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">功效升级明显：</span>防晒、防水、隔离等附加功效销售额占比高且增长快，消费者对彩妆产品的功能性要求不断提升。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">品牌竞争激烈：</span>YSL圣罗兰、彩棠、毛戈平等品牌表现突出；雅诗兰黛DW持妆粉底液、YSL圣罗兰粉气垫等经典产品市场份额稳固，国货底妆品牌逐渐获得市场认可。</p>
-            </div>
-
-            <div class="key-insight">
-                <div class="key-insight-title">发展趋势</div>
-                彩妆行业正从单纯的美化功能向"美妆+护肤"的复合功能转变，养肤防护型彩妆成为新的增长点，预示着行业向更加专业化、功能化方向发展。
-            </div>
-
-            <div class="flex-row-images">
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\彩妆行业品类销售额分布及同比增速.png"
-onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=彩妆品类分析图';" alt="彩妆行业品类销售额分布及同比增速">
-                    <div class="image-description">图：2025年H1彩妆行业品类销售额分布及同比增速</div>
+            <!-- 美容护肤行业综合分析 -->
+            <div class="section" id="beauty-skincare">
+                <h2><span class="emoji">✨</span>美容护肤行业综合分析</h2>
+                
+                <div class="trend-section">
+                    <div class="trend-title">护肤行业科学化与个性化并进</div>
+                    <div class="trend-content">
+                        2025年美容护肤行业进入科学护肤与个性化定制的新阶段。618期间全网销售总额达432亿元，抗衰老成为最大增长驱动力。消费者对成分的认知度显著提升，功效导向的购买决策成为主流。透明质酸、烟酰胺等科学成分体量领先，而红花、薄荷等天然植物成分增速超100%，显示消费者对天然与科学并重的需求特征。
+                    </div>
                 </div>
 
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\彩妆行业“附加功效”标签趋势矩阵.png"
-    onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=彩妆行业“附加功效”标签趋势矩阵图';" alt="彩妆行业“附加功效”标签趋势">
-                    <div class="image-description">图：彩妆行业"附加功效"标签趋势矩阵 - 功能性需求上升
-</div>
+                <div class="market-data">
+                    <div class="data-card">
+                        <div class="data-value">432亿</div>
+                        <div class="data-label">618全网销售总额（元）</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">100%+</div>
+                        <div class="data-label">天然成分增速</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">60%+</div>
+                        <div class="data-label">抗皱功效增长率</div>
+                    </div>
                 </div>
-            </div>
-            
 
-        <!-- Slide 7: 香薰香氛产品分析 -->
-        <div class="content-block">
-            <h2 class="slide-title">7. 香薰香氛产品分析</h2>
-            
-            <div class="trend-section">
-                <div class="trend-title">香氛产品成情绪管理新工具</div>
-                <div class="trend-content">
-                    香薰香氛产品正成为现代人情绪管理和生活品质提升的重要工具。随着工作压力增大和生活节奏加快，消费者面临社交媒体问题(47.3%)、焦虑(34.63%)、工作压力(30.73%)等多重困扰，香氛产品凭借其情绪疗愈功能获得市场认可。场景化细分和个性化定制成为行业发展的重要方向。
+                <div class="bullet-point">
+                    <span class="highlight">消费关注点聚焦：</span>面部护理套装、液态精华、乳液/面霜成为最受关注品类；保湿功效销售额超1000亿，修护和抗衰紧随其后，显示基础护肤需求依然强劲。
                 </div>
-            </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">成分认知升级：</span>透明质酸体量最高，烟酰胺、泛醇等科学成分增长稳定；红花、薄荷等天然植物成分增速超100%，体现消费者对"天然科学"并重的追求。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">功效需求明确化：</span>抗皱、紧致功效销售额增长超60%，80%消费者对抗衰老关注度大幅提升，功效护肤成分认知度日趋成熟。
+                </div>
 
-            <div class="market-data">
-                <div class="data-card">
-                    <div class="data-value">665.48W</div>
-                    <div class="data-label">万火香薰销售额</div>
+                <h3>面膜市场细分化趋势</h3>
+                <div class="trend-section">
+                    <div class="trend-title">面膜市场向三大赛道分化</div>
+                    <div class="trend-content">
+                        小红书2025Q1高热度搜索词显示面膜市场正向三大赛道分化：基础修护赛道注重功效性，场景化仪式感赛道强调使用体验，技术流赛道追求科技含量。这种细分化趋势反映了消费者需求的多元化和专业化。
+                    </div>
                 </div>
-                <div class="data-card">
-                    <div class="data-value">47.3%</div>
-                    <div class="data-label">消费者面临社交媒体问题比例</div>
-                </div>
-                <div class="data-card">
-                    <div class="data-value">54.12%</div>
-                    <div class="data-label">香水用于自我放松比例</div>
-                </div>
-            </div>
 
-            <div class="bullet-point">
-                <p><span class="highlight">情绪疗愈需求增长：</span>现代人面临多重心理压力，香薰产品通过嗅觉刺激实现情绪调节，成为有效的压力缓解工具。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">场景化应用深化：</span>不同空间香氛偏好明显分化，卧室偏爱薰衣草(≥96%)，办公室偏爱薄荷(≥87%)，餐厅偏爱草本香型(≥98%)，体现了精准化场景应用趋势。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">文化融合创新：</span>结合二十四节气等传统文化元素推出相应产品，体现了东方文化与现代生活方式的融合。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">使用价值多元化：</span>香水主要用于自我放松(54.12%)和提高社交印象(49.41%)；香薰主要用于提升生活品质(47.76%)和调节情绪压力(43.28%)。</p>
-            </div>
-
-            <div class="flex-row-images">
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\香薰产品分析—芳香疗法.png"
-onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=香薰产品情绪疗法图';" alt="香薰产品分析—芳香疗法">
-                    <div class="image-description">图：香薰产品的情绪疗法 - 压力缓解成核心需求</div>
-                </div>
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\香水香氛产品分析—场景分化.png"
-onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=香氛场景分化图';" alt="香水香氛产品分析—场景分化">
-                    <div class="image-description">图：香氛产品场景分化 - 精准化应用趋势</div>
+                <h3>行业四大发展趋势</h3>
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4><span class="emoji">👥</span>全民抗衰</h4>
+                        <p>抗衰需求年轻化明显，精准成分成为增长密码，年轻群体提前介入抗衰护理，推动市场快速扩容。</p>
+                        <span class="tag">年轻化趋势</span>
+                        <span class="tag">精准成分</span>
+                    </div>
+                    
+                    <div class="trend-card">
+                        <h4><span class="emoji">🌿</span>纯净美妆</h4>
+                        <p>Clean Beauty受年轻群体追捧，环保可持续成为发展方向，成分透明化、包装环保化成为品牌差异化竞争点。</p>
+                        <span class="tag">环保理念</span>
+                        <span class="tag">成分透明</span>
+                    </div>
+                    
+                    <div class="trend-card">
+                        <h4><span class="emoji">🏥</span>妆械联合</h4>
+                        <p>跨界医美为品牌提供第二增长点，专业化、医学化成为高端护肤品发展趋势。</p>
+                        <span class="tag">跨界医美</span>
+                        <span class="tag">专业医学</span>
+                    </div>
+                    
+                    <div class="trend-card">
+                        <h4><span class="emoji">👶</span>婴童护肤</h4>
+                        <p>分龄护肤成差异化趋势，天然成分增强消费者信任感，专业化程度不断提升。</p>
+                        <span class="tag">分龄护理</span>
+                        <span class="tag">天然安全</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="image-container">
-                <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\香水香氛产品核心诉求.png"
-onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=香氛核心诉求图';" alt="香水香氛产品核心诉求">
-                <div class="image-description">图：香水香氛产品核心诉求 - 情绪价值成主要驱动力</div>
-            </div>
-        </div>
+            <!-- 香薰香氛产品分析 -->
+            <div class="section" id="perfume-fragrance">
+                <h2><span class="emoji">🌹</span>香薰香氛产品分析</h2>
+                
+                <div class="trend-section">
+                    <div class="trend-title">香氛产品成情绪管理新工具</div>
+                    <div class="trend-content">
+                        香薰香氛产品正成为现代人情绪管理和生活品质提升的重要工具。随着工作压力增大和生活节奏加快，消费者面临社交媒体问题(47.3%)、焦虑(34.63%)、工作压力(30.73%)等多重困扰，香氛产品凭借其情绪疗愈功能获得市场认可。场景化细分和个性化定制成为行业发展的重要方向。
+                    </div>
+                </div>
 
-        <!-- Slide 8: 个护市场细分化趋势 -->
-        <div class="content-block">
-            <h2 class="slide-title">8. 个护市场市场趋势</h2>
-            
-            <div class="trend-section">
-                <div class="trend-title">个护市场精细化发展</div>
-                <div class="trend-content">
-                    2025年个护市场呈现明显的细分化和专业化趋势。618期间全网销售总额达233亿元，身体护理、个护膜、护发三大细分市场各有特色。身体护理市场线上交易额约360亿元，局部护理成为新增长点；个护膜市场7.1亿元GMV虽然体量较小但增长强劲；护发市场GMV超550亿元，功效化趋势明显。
+                <div class="market-data">
+                    <div class="data-card">
+                        <div class="data-value">665.48W</div>
+                        <div class="data-label">万火香薰销售额</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">47.3%</div>
+                        <div class="data-label">消费者面临社交媒体问题比例</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">54.12%</div>
+                        <div class="data-label">香水用于自我放松比例</div>
+                    </div>
+                </div>
+
+                <div class="bullet-point">
+                    <span class="highlight">情绪疗愈需求增长：</span>现代人面临多重心理压力，香薰产品通过嗅觉刺激实现情绪调节，成为有效的压力缓解工具。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">场景化应用深化：</span>不同空间香氛偏好明显分化，卧室偏爱薰衣草(≥96%)，办公室偏爱薄荷(≥87%)，餐厅偏爱草本香型(≥98%)，体现了精准化场景应用趋势。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">文化融合创新：</span>结合二十四节气等传统文化元素推出相应产品，体现了东方文化与现代生活方式的融合。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">使用价值多元化：</span>香水主要用于自我放松(54.12%)和提高社交印象(49.41%)；香薰主要用于提升生活品质(47.76%)和调节情绪压力(43.28%)。
+                </div>
+
+                <div class="key-insight">
+                    <div class="key-insight-title">发展机遇</div>
+                    情绪价值成为产品设计的新维度，品牌需要在功能性之外提供情感慰藉和精神满足。芳疗概念、季节限定香型、个性化调香等创新方向为品牌提供了差异化竞争机会，情绪经济与护理需求的结合前景广阔。
                 </div>
             </div>
 
-            <div class="data-highlight">
-                <strong>市场规模：</strong>618全网销售总额233亿元，细分市场各有特色，专业化程度不断提升。
-            </div>
-
-            <div class="bullet-point">
-                <p><span class="highlight">身体护理精细化：</span>线上交易额约360亿元，身体乳/霜/精油占主导(超75%)。局部护理成新增长点：颈部(+33%)、胸部(+18%)、手部(+3%)。主要用户为25-34岁中低消费力女性。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">个护膜概念爆发：</span>近12个月线上GMV为7.1亿元，三大概念(漫画手、天鹅颈、富贵足)声量飙升，柔嫩富贵足声量同增111%，体现了社交媒体驱动的美学理念。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">护发市场功效升级：</span>线上GMV超550亿元，抖音同增42%，京东同增65%。护发功效升级明显，干性发质护理同增150%+，专业化程度不断提升。</p>
-            </div>
-
-            <div class="key-insight">
-                <div class="key-insight-title">消费趋势</div>
-                个护市场正从基础清洁向专业护理转变，消费者对不同身体部位的护理需求日益精细化，为品牌提供了丰富的产品创新空间。
-            </div>
-
-            <div class="flex-row-images">
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\线上平台身体护理产品GMV分布.png"
-    onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=Image+of+Bodycare+GMV';" alt="线上平台身体护理产品GMV分布">
-                    <div class="image-description">图：线上平台身体护理产品GMV分布（淘天、京东、抖音、拼多多），2024年</div>
+            <!-- 个护市场细分化趋势 -->
+            <div class="section" id="personal-care-market">
+                <h2><span class="emoji">🧴</span>个护市场细分化趋势</h2>
+                
+                <div class="trend-section">
+                    <div class="trend-title">个护市场精细化发展</div>
+                    <div class="trend-content">
+                        2025年个护市场呈现明显的细分化和专业化趋势。618期间全网销售总额达233亿元，身体护理、个护膜、护发三大细分市场各有特色。身体护理市场线上交易额约360亿元，局部护理成为新增长点；个护膜市场7.1亿元GMV虽然体量较小但增长强劲；护发市场GMV超550亿元，功效化趋势明显。
+                    </div>
                 </div>
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\人群画像身体护理.png"
-    onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=Image+of+Bodycare+Demographics';" alt="人群画像身体护理由25-34岁女性主导">
-                    <div class="image-description">图：人群画像 | 身体护理由25-34岁女性主导，需求分层趋势显著</div>
-                </div>
-            </div>
 
-            <div class="flex-row-images">
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\个护膜（手膜、足膜、颈膜）线上市场GMV分布.png"
-    onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=Image+of+Personal+Care+Mask+GMV';" alt="个护膜GMV分布">
-                    <div class="image-description">图：个护膜（手膜、足膜、颈膜）线上市场GMV分布 (数据来源：用户说研究中心)</div>
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span>市场规模</span>
+                        <span class="data-value">618全网销售总额233亿元，细分市场各有特色，专业化程度不断提升</span>
+                    </div>
                 </div>
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\2025.01MAT三大个护膜概念全网声量规模.png"
-    onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=Image+of+Personal+Care+Mask+Concepts';" alt="202501MAT三大个护膜概念全网声量规模">
-                    <div class="image-description">图：2025.01MAT三大个护膜概念全网声量规模 (数据来源：用户说研究中心)</div>
+
+                <div class="bullet-point">
+                    <span class="highlight">身体护理精细化：</span>线上交易额约360亿元，身体乳/霜/精油占主导(超75%)。局部护理成新增长点：颈部(+33%)、胸部(+18%)、手部(+3%)。主要用户为25-34岁中低消费力女性。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">个护膜概念爆发：</span>近12个月线上GMV为7.1亿元，三大概念(漫画手、天鹅颈、富贵足)声量飙升，柔嫩富贵足声量同增111%，体现了社交媒体驱动的美学理念。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">护发市场功效升级：</span>线上GMV超550亿元，抖音同增42%，京东同增65%。护发功效升级明显，干性发质护理同增150%+，专业化程度不断提升。
+                </div>
+
+                <div class="key-insight">
+                    <div class="key-insight-title">消费趋势</div>
+                    个护市场正从基础清洁向专业护理转变，消费者对不同身体部位的护理需求日益精细化，为品牌提供了丰富的产品创新空间。
                 </div>
             </div>
 
-            <div class="flex-row-images">
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\头发洗护产品线上市场总结"
-    onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=Image+of+Haircare+Market+Summary';" alt="头发洗护产品线上市场总结">
-                    <div class="image-description">图：头发洗护产品线上市场总结（GMV、备案量、热度分析） (数据来源：用户说研究中心)</div>
-                </div>
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\头发洗护全网声量分析.png"
-    onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=Image+of+Haircare+Voice';" alt="头发洗护全网声量分析">
-                    <div class="image-description">图：头发洗护全网声量分析（一级类目、细分类目声量及变化） (数据来源：用户说研究中心)</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 9: 营养保健市场分析 -->
-        <div class="content-block">
-            <h2 class="slide-title">9. 营养保健市场分析</h2>
-            
-            <div class="trend-section">
-                <div class="trend-title">健康意识提升驱动市场细分</div>
-                <div class="trend-content">
-                    2025年营养保健市场在健康意识提升的驱动下快速发展。618期间全网销售总额达143亿元，市场呈现专业化与个性化并进的特征。益生菌市场表现突出，2025年Q1增速跑赢保健大盘；体重管理、女性健康等细分赛道快速崛起。消费者健康困扰主要集中在睡眠、肠胃、皮肤等方面，精准化产品需求增长明显。
-                </div>
-            </div>
-
-            <div class="market-data">
-                <div class="data-card">
-                    <div class="data-value">143亿</div>
-                    <div class="data-label">618全网销售总额（元）</div>
-                </div>
-                <div class="data-card">
-                    <div class="data-value">34.9%</div>
-                    <div class="data-label">抖音益生菌平台份额</div>
-                </div>
-                <div class="data-card">
-                    <div class="data-value">30.8%</div>
-                    <div class="data-label">国内益生菌销售额增速</div>
-                </div>
-            </div>
-
-            <div class="bullet-point">
-                <p><span class="highlight">市场持续增长：</span>2024年健康营养行业规模持续增长但增速放缓，行业进入结构性调整期，精准化、专业化产品更受市场青睐。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">益生菌市场突出：</span>2025年Q1增速跑赢保健大盘，抖音平台份额领先(34.9%)，国内销售额增速(30.8%)大幅领先跨境电商，显示国产品牌竞争力提升。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">细分赛道崛起：</span>体重管理市场持续增长，千亿级代餐轻食市场强势崛起；女性健康食品全球市场加速扩容，免疫、体重管理、肠道健康等成为热门赛道。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">消费需求精准化：</span>消费者健康困扰主要集中在睡眠问题、肠胃问题、皮肤状态等方面，精准化解决方案需求增长明显。</p>
-            </div>
-
-            <div class="flex-row-images">
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\中国健康营养行业市场规模.png"
-    onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=Image+of+Health+Nutrition+Market';" alt="中国健康营养行业市场规模">
-                    <div class="image-description">图：2010-2024年中国健康营养行业市场规模及增速情况（单位：亿元） (数据来源：CBNData)</div>
+            <!-- 营养保健市场分析 -->
+            <div class="section" id="nutrition-health">
+                <h2><span class="emoji">💊</span>营养保健市场分析</h2>
+                
+                <div class="trend-section">
+                    <div class="trend-title">健康意识提升驱动市场细分</div>
+                    <div class="trend-content">
+                        2025年营养保健市场在健康意识提升的驱动下快速发展。618期间全网销售总额达143亿元，市场呈现专业化与个性化并进的特征。益生菌市场表现突出，2025年Q1增速跑赢保健大盘；体重管理、女性健康等细分赛道快速崛起。消费者健康困扰主要集中在睡眠、肝胃、皮肤等方面，精准化产品需求增长明显。
+                    </div>
                 </div>
 
-            <div class="image-container">
-                <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\消费者面临的TOP15健康困扰.png"
-onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=Image+of+Consumer+Health+Concerns';" alt="消费者当前主要面临睡眠问题">
-                <div class="image-description">图：消费者面临的TOP15健康困扰 (数据来源：CBNData)</div>
-            </div>
+                <div class="market-data">
+                    <div class="data-card">
+                        <div class="data-value">143亿</div>
+                        <div class="data-label">618全网销售总额（元）</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">34.9%</div>
+                        <div class="data-label">抖音益生菌平台份额</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">30.8%</div>
+                        <div class="data-label">国内益生菌销售额增速</div>
+                    </div>
                 </div>
 
-            <div class="flex-row-images">
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\2025年第一季度益生菌增速.png"
-    onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=Image+of+Probiotics+Growth';" alt="2025年第一季度益生菌增速">
-                    <div class="image-description">图：2025年第一季度，益生菌销售额（¥）及同比 (数据来源：CBNData)</div>
+                <div class="bullet-point">
+                    <span class="highlight">市场持续增长：</span>2024年健康营养行业规模持续增长但增速放缓，行业进入结构性调整期，精准化、专业化产品更受市场青睐。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">益生菌市场突出：</span>2025年Q1增速跑赢保健大盘，抖音平台份额领先(34.9%)，国内销售额增速(30.8%)大幅领先跨境电商，显示国产品牌竞争力提升。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">细分赛道崛起：</span>体重管理市场持续增长，千亿级代餐轻食市场强势崛起；女性健康食品全球市场加速扩容，免疫、体重管理、肝道健康等成为热门赛道。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">消费需求精准化：</span>消费者健康困扰主要集中在睡眠问题、肝胃问题、皮肤状态等方面，精准化解决方案需求增长明显。
                 </div>
 
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\益生菌电商市场季度国内及境外市场销售额及其YoY%.png"
-    onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=Image+of+Probiotics+Domestic+CrossBorder';" alt="过去两年益生菌电商市场季度国内及境外市场销售额及其YoY%">
-                    <div class="image-description">图：过去两年益生菌电商市场季度国内及境外市场销售额及其YoY% (数据来源：CBNData)</div>
+                <div class="key-insight">
+                    <div class="key-insight-title">发展机遇</div>
+                    中西结合的保健品成为新趋势，传统中医理论与现代营养学的结合为产品创新提供了新方向。场景化营销和功效验证将成为品牌差异化的关键。
                 </div>
             </div>
 
-            <div class="trend-section">
-                <div class="trend-title">女性健康食品市场前景</div>
-                <div class="trend-content">
-                    女性健康食品市场全球扩容明显，亚太地区成为新增长引擎。中国市场在功能性食品和中式滋补品方面表现突出，免疫支持、体重管理、肠道健康、周期健康、口服美容等细分赛道快速发展。
+            <!-- 医美行业分析 -->
+            <div class="section" id="medical-beauty">
+                <h2><span class="emoji">💉</span>医美行业分析</h2>
+                
+                <div class="trend-section">
+                    <div class="trend-title">医美行业进入理性发展期</div>
+                    <div class="trend-content">
+                        2025年医美行业在快速发展的同时，逐步进入理性化、专业化发展阶段。2024年医美相关话题社媒平台共获关注590万条，显示消费者关注度持续上升。但随着市场教育的深入，消费者对术后护理和安全性的重视程度显著提升。妆械联合概念兴起，为行业发展提供了新的增长路径。
+                    </div>
+                </div>
+
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span>行业现状</span>
+                        <span class="data-value">社媒关注度590万条，术后护理需求爆发，保湿(+361%)、抗炎(+271%)、修复(+243%)功效增长明显</span>
+                    </div>
+                </div>
+
+                <div class="bullet-point">
+                    <span class="highlight">消费群体特征明确：</span>21-35岁年轻女性为主力消费群体，主要集中在一二线城市，抗衰老成为核心诉求，抗衰需求(+66%)、紧致(+52%)增长明显。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">术后护理需求爆发：</span>随着消费者对医美安全性认知提升，术后护理产品需求激增，保湿(+361%)、抗炎(+271%)、修复(+243%)等功效产品增长强劲。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">妆械联合趋势：</span>妆字号产品与械字号产品结合，形成全周期皮肤管理方案，韩束、玉泽、敷尔佳、可复美等品牌积极布局这一新兴赛道。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">品牌竞争加剧：</span>医用敷料TOP10品牌市场集中度58.9%，头部品牌增长放缓(+22.4%)，新兴品牌快速增长(NO.101+: +95.3%)，市场竞争更加激烈。
+                </div>
+
+                <div class="key-insight">
+                    <div class="key-insight-title">发展趋势</div>
+                    医美行业正从单纯的美容需求向专业医疗服务转变，消费者对安全性、专业性、服务质量的要求不断提升，行业标准化和规范化发展势在必行。
                 </div>
             </div>
 
-            <div class="image-container">
-                <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\全球女性健康食品饮料市场规模.png"
-onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=女性健康食品市场图';" alt="全球女性健康食品饮料市场规模">
-                <div class="image-description">图：全球女性健康食品饮料市场规模 - 快速增长趋势</div>
-            </div>
-        </div>
+            <!-- 医用敷料产品趋势 -->
+            <div class="section" id="medical-dressing">
+                <h2><span class="emoji">🩹</span>医用敷料产品趋势</h2>
+                
+                <div class="trend-section">
+                    <div class="trend-title">技术驱动产品升级</div>
+                    <div class="trend-content">
+                        医用敷料市场在技术进步的推动下快速发展，重组胶原蛋白和透明质酸成为核心热门原料。这些成分不仅用户认知度高，在医用敷料方面也具有良好的修复效果。同时，针对术前/中/后不同场景的全周期解决方案成为行业发展新方向，专业化程度不断提升。
+                    </div>
+                </div>
 
-        <!-- Slide 10: 医美行业分析 -->
-        <div class="content-block">
-            <h2 class="slide-title">10. 医美行业分析</h2>
-            
-            <div class="trend-section">
-                <div class="trend-title">医美行业进入理性发展期</div>
-                <div class="trend-content">
-                    2025年医美行业在快速发展的同时，逐步进入理性化、专业化发展阶段。2024年医美相关话题社媒平台共获关注590万条，显示消费者关注度持续上升。但随着市场教育的深入，消费者对术后护理和安全性的重视程度显著提升。妆械联合概念兴起，为行业发展提供了新的增长路径。
+                <div class="bullet-point">
+                    <span class="highlight">核心原料技术突破：</span>重组胶原蛋白和透明质酸技术日趋成熟，用户认知度高，在修复、抗衰、保湿等方面效果显著，成为医用敷料的核心竞争力。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">全周期服务理念：</span>针对医美术前准备、术中保护、术后修复等不同阶段，提供专业化的产品解决方案，形成完整的服务闭环。
+                </div>
+                
+                <div class="bullet-point">
+                    <span class="highlight">品牌专业化布局：</span>可复美、敷尔佳等品牌推出专业院线系列，打通0-28天护理周期，体现了行业向专业化、医学化方向发展的趋势。
+                </div>
+
+                <div class="key-insight">
+                    <div class="key-insight-title">技术发展方向</div>
+                    医用敷料行业正向更高技术含量、更强功效性、更专业化的方向发展，技术创新与临床应用的结合将是未来竞争的关键。
                 </div>
             </div>
 
-            <div class="data-highlight">
-                <strong>行业现状：</strong>社媒关注度590万条，术后护理需求爆发，保湿(+361%)、抗炎(+271%)、修复(+243%)功效增长明显。
-            </div>
-
-            <div class="bullet-point">
-                <p><span class="highlight">消费群体特征明确：</span>21-35岁年轻女性为主力消费群体，主要集中在一二线城市，抗衰老成为核心诉求，抗衰需求(+66%)、紧致(+52%)增长明显。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">术后护理需求爆发：</span>随着消费者对医美安全性认知提升，术后护理产品需求激增，保湿(+361%)、抗炎(+271%)、修复(+243%)等功效产品增长强劲。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">妆械联合趋势：</span>妆字号产品与械字号产品结合，形成全周期皮肤管理方案，韩束、玉泽、敷尔佳、可复美等品牌积极布局这一新兴赛道。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">品牌竞争加剧：</span>医用敷料TOP10品牌市场集中度58.9%，头部品牌增长放缓(+22.4%)，新兴品牌快速增长(NO.101+: +95.3%)，市场竞争更加激烈。</p>
-            </div>
-
-            <div class="key-insight">
-                <div class="key-insight-title">发展趋势</div>
-                医美行业正从单纯的美容需求向专业医疗服务转变，消费者对安全性、专业性、服务质量的要求不断提升，行业标准化和规范化发展势在必行。
-            </div>
-
-            <div class="flex-row-images">
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\医美社媒声量分析.png"
-onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=医美社媒分析图';" alt="医美社媒声量分析">
-                    <div class="image-description">图：医美社媒声量分析 - 关注度持续上升</div>
+            <!-- 各大电商平台用户画像与消费特征 -->
+            <div class="section" id="platform-users">
+                <h2><span class="emoji">📱</span>各大电商平台用户画像与消费特征</h2>
+                
+                <div class="trend-section">
+                    <div class="trend-title">平台差异化发展格局</div>
+                    <div class="trend-content">
+                        2025年各大电商平台呈现明显的差异化发展格局，用户群体特征、消费行为、平台定位都有明显区别。了解各平台用户画像对于品牌制定差异化营销策略具有重要意义。天猫依然是综合性购物平台的领导者，京东在3C数码领域优势明显，拼多多深耕下沉市场，抖音依托年轻用户群体快速增长，小红书在种草经济方面独树一帜。
+                    </div>
                 </div>
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\医美受众人群分析.png"
-onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=医美人群分析图';" alt="医美受众人群分析">
-                    <div class="image-description">图：医美受众人群分析 - 年轻女性为主力</div>
+
+                <div class="strategy-grid">
+                    <div class="strategy-item">
+                        <h4><span class="emoji">🛒</span>天猫</h4>
+                        <p><strong>综合性购物平台领导者</strong></p>
+                        <div class="data-highlight">
+                            <div class="data-item">
+                                <span>DAU</span>
+                                <span class="data-value">3.8-4.2亿</span>
+                            </div>
+                            <div class="data-item">
+                                <span>核心年龄层</span>
+                                <span class="data-value">25-40岁</span>
+                            </div>
+                            <div class="data-item">
+                                <span>主要用户群体</span>
+                                <span class="data-value">都市白领、家庭用户</span>
+                            </div>
+                            <div class="data-item">
+                                <span>消费水平</span>
+                                <span class="data-value">中高</span>
+                            </div>
+                        </div>
+                        <span class="tag">全品类购物</span>
+                        <span class="tag">品牌集中</span>
+                        <span class="tag">品质保障</span>
+                    </div>
+
+                    <div class="strategy-item">
+                        <h4><span class="emoji">📱</span>京东</h4>
+                        <p><strong>3C数码领域绝对优势</strong></p>
+                        <div class="data-highlight">
+                            <div class="data-item">
+                                <span>DAU</span>
+                                <span class="data-value">1.2-1.5亿</span>
+                            </div>
+                            <div class="data-item">
+                                <span>核心年龄层</span>
+                                <span class="data-value">25-44岁</span>
+                            </div>
+                            <div class="data-item">
+                                <span>主要用户群体</span>
+                                <span class="data-value">科技爱好者、商务人士</span>
+                            </div>
+                            <div class="data-item">
+                                <span>消费水平</span>
+                                <span class="data-value">高</span>
+                            </div>
+                        </div>
+                        <span class="tag">3C数码</span>
+                        <span class="tag">家电优势</span>
+                        <span class="tag">物流领先</span>
+                    </div>
+
+                    <div class="strategy-item">
+                        <h4><span class="emoji">🛍️</span>拼多多</h4>
+                        <p><strong>下沉市场深度渗透</strong></p>
+                        <div class="data-highlight">
+                            <div class="data-item">
+                                <span>DAU</span>
+                                <span class="data-value">2.5-3.0亿</span>
+                            </div>
+                            <div class="data-item">
+                                <span>核心年龄层</span>
+                                <span class="data-value">30-50岁</span>
+                            </div>
+                            <div class="data-item">
+                                <span>主要用户群体</span>
+                                <span class="data-value">下沉市场、价格敏感型</span>
+                            </div>
+                            <div class="data-item">
+                                <span>消费水平</span>
+                                <span class="data-value">中低</span>
+                            </div>
+                        </div>
+                        <span class="tag">低价团购</span>
+                        <span class="tag">农产品</span>
+                        <span class="tag">下沉市场</span>
+                    </div>
+
+                    <div class="strategy-item">
+                        <h4><span class="emoji">🎵</span>抖音</h4>
+                        <p><strong>Z世代与潮流消费者聚集地</strong></p>
+                        <div class="data-highlight">
+                            <div class="data-item">
+                                <span>DAU</span>
+                                <span class="data-value">1.8-2.2亿</span>
+                            </div>
+                            <div class="data-item">
+                                <span>核心年龄层</span>
+                                <span class="data-value">18-35岁</span>
+                            </div>
+                            <div class="data-item">
+                                <span>主要用户群体</span>
+                                <span class="data-value">Z世代、潮流消费者</span>
+                            </div>
+                            <div class="data-item">
+                                <span>消费水平</span>
+                                <span class="data-value">中</span>
+                            </div>
+                        </div>
+                        <span class="tag">直播带货</span>
+                        <span class="tag">快消品</span>
+                        <span class="tag">冲动消费</span>
+                    </div>
+
+                    <div class="strategy-item">
+                        <h4><span class="emoji">📝</span>小红书</h4>
+                        <p><strong>种草经济领导者</strong></p>
+                        <div class="data-highlight">
+                            <div class="data-item">
+                                <span>DAU</span>
+                                <span class="data-value">0.7-0.9亿</span>
+                            </div>
+                            <div class="data-item">
+                                <span>核心年龄层</span>
+                                <span class="data-value">25-35岁</span>
+                            </div>
+                            <div class="data-item">
+                                <span>主要用户群体</span>
+                                <span class="data-value">高净值女性、宝妈、潮流青年</span>
+                            </div>
+                            <div class="data-item">
+                                <span>消费水平</span>
+                                <span class="data-value">中高</span>
+                            </div>
+                        </div>
+                        <span class="tag">美妆时尚</span>
+                        <span class="tag">生活方式</span>
+                        <span class="tag">种草经济</span>
+                    </div>
+
+                    <div class="strategy-item">
+                        <h4><span class="emoji">💬</span>视频号</h4>
+                        <p><strong>微信生态私域流量</strong></p>
+                        <div class="data-highlight">
+                            <div class="data-item">
+                                <span>DAU</span>
+                                <span class="data-value">0.6-0.8亿</span>
+                            </div>
+                            <div class="data-item">
+                                <span>核心年龄层</span>
+                                <span class="data-value">30-50岁</span>
+                            </div>
+                            <div class="data-item">
+                                <span>主要用户群体</span>
+                                <span class="data-value">微信生态用户、中老年</span>
+                            </div>
+                            <div class="data-item">
+                                <span>消费水平</span>
+                                <span class="data-value">跨度大</span>
+                            </div>
+                        </div>
+                        <span class="tag">私域电商</span>
+                        <span class="tag">课程知识</span>
+                        <span class="tag">保健品</span>
+                    </div>
+                </div>
+
+                <div class="key-insight">
+                    <div class="key-insight-title">平台策略洞察</div>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li><span class="highlight">天猫：</span>综合性平台优势明显，适合全品类品牌进行规模化运营</li>
+                        <li><span class="highlight">京东：</span>在3C数码、家电领域具有绝对优势，用户消费能力强</li>
+                        <li><span class="highlight">拼多多：</span>下沉市场渗透率高，价格敏感型消费者集中</li>
+                        <li><span class="highlight">抖音：</span>依托年轻用户和内容创作，冲动消费特征明显</li>
+                        <li><span class="highlight">小红书：</span>种草经济领导者，高净值女性用户注重品质与生活方式</li>
+                        <li><span class="highlight">视频号：</span>微信生态优势显著，私域流量运营潜力巨大</li>
+                    </ul>
                 </div>
             </div>
-        </div>
 
-        <!-- Slide 11: 医用敷料产品趋势 -->
-        <div class="content-block">
-            <h2 class="slide-title">11. 医用敷料产品趋势</h2>
-            
-            <div class="trend-section">
-                <div class="trend-title">技术驱动产品升级</div>
-                <div class="trend-content">
-                    医用敷料市场在技术进步的推动下快速发展，重组胶原蛋白和透明质酸成为核心热门原料。这些成分不仅用户认知度高，在医用敷料方面也具有良好的修复效果。同时，针对术前/中/后不同场景的全周期解决方案成为行业发展新方向，专业化程度不断提升。
-                </div>
+            <div class="footer">
+                <h3>📊 数据来源与说明</h3>
+                <p>淘系平台数据、618电商大促数据、各行业权威研究机构数据</p>
+                <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">
+                    本资料基于权威数据源整理分析，仅供内部学习交流使用。
+                </p>
             </div>
-
-            <div class="bullet-point">
-                <p><span class="highlight">核心原料技术突破：</span>重组胶原蛋白和透明质酸技术日趋成熟，用户认知度高，在修复、抗衰、保湿等方面效果显著，成为医用敷料的核心竞争力。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">全周期服务理念：</span>针对医美术前准备、术中保护、术后修复等不同阶段，提供专业化的产品解决方案，形成完整的服务闭环。</p>
-            </div>
-            
-            <div class="bullet-point">
-                <p><span class="highlight">品牌专业化布局：</span>可复美、敷尔佳等品牌推出专业院线系列，打通0-28天护理周期，体现了行业向专业化、医学化方向发展的趋势。</p>
-            </div>
-
-            <div class="key-insight">
-                <div class="key-insight-title">技术发展方向</div>
-                医用敷料行业正向更高技术含量、更强功效性、更专业化的方向发展，技术创新与临床应用的结合将是未来竞争的关键。
-            </div>
-
-            <div class="flex-row-images">
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\产品趋势一—开卷重组胶原蛋白和透明质酸两大热门原料.png"
-    onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=核心原料趋势图';" alt="产品趋势一—开卷重组胶原蛋白和透明质酸两大热门原料">
-                    <div class="image-description">图：核心原料技术趋势 - 科技创新驱动发展</div>
-                </div>
-                <div class="image-container">
-                    <img src="C:\Users\Admin\Desktop\行业趋势分享资料\images\产品趋势二—针对术前中后不同的场景，提供一套全周期的解决方案.png"
-    onerror="this.onerror=null;this.src='https://placehold.co/800x450/f8bbd0/c2185b?text=全周期方案图';" alt="产品趋势二—针对术前中后不同的场景，提供一套全周期的解决方案">
-                    <div class="image-description">图：全周期解决方案 - 专业化服务体系</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 12: 各平台用户画像 -->
-        <div class="content-block">
-            <h2 class="slide-title">12. 各大电商平台用户画像与消费特征</h2>
-            
-            <div class="trend-section">
-                <div class="trend-title">平台差异化发展格局</div>
-                <div class="trend-content">
-                    2025年各大电商平台呈现明显的差异化发展格局，用户群体特征、消费行为、平台定位都有明显区别。了解各平台用户画像对于品牌制定差异化营销策略具有重要意义。天猫依然是综合性购物平台的领导者，京东在3C数码领域优势明显，拼多多深耕下沉市场，抖音依托年轻用户群体快速增长，小红书在种草经济方面独树一帜。
-                </div>
-            </div>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>平台</th>
-                        <th>DAU（亿）</th>
-                        <th>核心年龄层</th>
-                        <th>主要用户群体</th>
-                        <th>消费水平</th>
-                        <th>核心消费场景</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>天猫</td>
-                        <td>3.8-4.2</td>
-                        <td>25-40岁</td>
-                        <td>都市白领、家庭用户</td>
-                        <td>中高</td>
-                        <td>全品类购物</td>
-                    </tr>
-                    <tr>
-                        <td>京东</td>
-                        <td>1.2-1.5</td>
-                        <td>25-44岁</td>
-                        <td>科技爱好者、商务人士</td>
-                        <td>高</td>
-                        <td>3C数码、家电、快消</td>
-                    </tr>
-                    <tr>
-                        <td>拼多多</td>
-                        <td>2.5-3.0</td>
-                        <td>30-50岁</td>
-                        <td>下沉市场、价格敏感型</td>
-                        <td>中低</td>
-                        <td>低价团购、农产品</td>
-                    </tr>
-                    <tr>
-                        <td>抖音</td>
-                        <td>1.8-2.2</td>
-                        <td>18-35岁</td>
-                        <td>Z世代、潮流消费者</td>
-                        <td>中</td>
-                        <td>直播带货、快消品</td>
-                    </tr>
-                    <tr>
-                        <td>小红书</td>
-                        <td>0.7-0.9</td>
-                        <td>25-35岁</td>
-                        <td>高净值女性、宝妈、潮流青年</td>
-                        <td>中高</td>
-                        <td>美妆、时尚、生活方式种草</td>
-                    </tr>
-                    <tr>
-                        <td>视频号</td>
-                        <td>0.6-0.8</td>
-                        <td>30-50岁</td>
-                        <td>微信生态用户、中老年</td>
-                        <td>跨度大</td>
-                        <td>私域电商、课程、保健品</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="key-insight">
-                <div class="key-insight-title">平台策略洞察</div>
-                <ul class="list-item">
-                    <li><span class="highlight">天猫：</span>综合性平台优势明显，适合全品类品牌进行规模化运营</li>
-                    <li><span class="highlight">京东：</span>在3C数码、家电领域具有绝对优势，用户消费能力强</li>
-                    <li><span class="highlight">拼多多：</span>下沉市场渗透率高，价格敏感型消费者集中</li>
-                    <li><span class="highlight">抖音：</span>依托年轻用户和内容创作，冲动消费特征明显</li>
-                    <li><span class="highlight">小红书：</span>种草经济领导者，高净值女性用户注重品质与生活方式</li>
-                    <li><span class="highlight">视频号：</span>微信生态优势显著，私域流量运营潜力巨大</li>
-                </ul>
-            </div>
-
-            <div class="note">数据来源于公开资料和行业调研，仅供参考。各平台用户特征和消费行为持续演进中。</div>
         </div>
     </div>
+
+    <script>
+        // 导航功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const sections = document.querySelectorAll('.section');
+            const navToggle = document.getElementById('navToggle');
+            const navSidebar = document.getElementById('navSidebar');
+
+            // 导航点击事件
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+
+                        // 移动端自动关闭导航
+                        if (window.innerWidth <= 1024) {
+                            navSidebar.classList.remove('open');
+                        }
+                    }
+                });
+            });
+
+            // 移动端导航切换
+            navToggle.addEventListener('click', function() {
+                navSidebar.classList.toggle('open');
+            });
+
+            // 点击主内容区关闭导航
+            document.querySelector('.main-content').addEventListener('click', function() {
+                if (window.innerWidth <= 1024) {
+                    navSidebar.classList.remove('open');
+                }
+            });
+
+            // 滚动时高亮当前章节
+            function updateActiveNav() {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (window.pageYOffset >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('href') === '#' + current) {
+                        item.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveNav);
+            updateActiveNav();
+        });
+    </script>
 </body>
 </html>
