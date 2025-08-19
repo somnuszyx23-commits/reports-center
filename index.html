@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>玫瑰-品类 报告分享中心</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fdf2f8 0%, #f8f4ff 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #374151;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #f472b6 0%, #c084fc 100%);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .admin-entrance {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .admin-entrance:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .admin-entrance.admin-mode {
+            background: #ef4444;
+            border-color: #dc2626;
+        }
+
+        .admin-entrance.admin-mode:hover {
+            background: #dc2626;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* 认证弹窗样式 */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .auth-modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .auth-modal h3 {
+            color: #ec4899;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .auth-modal input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 1em;
+        }
+
+        .auth-modal input:focus {
+            outline: none;
+            border-color: #f472b6;
+            box-shadow: 0 0 0 3px rgba(244, 114, 182, 0.2);
+        }
+
+        /* 管理员视图样式 */
+        .admin-section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-left: 4px solid #f472b6;
+            display: none;
+        }
+
+        .admin-section.show {
+            display: block;
+        }
+
+        /* GitHub配置区域 */
+        .github-config {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #0369a1;
+        }
+
+        .github-config h4 {
+            color: #0c4a6e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .config-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .config-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .config-item label {
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .config-item input {
+            padding: 8px 12px;
+            border: 1px solid #0ea5e9;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+
+        .config-item input:focus {
+            outline: none;
+            border-color: #0284c7;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+        }
+
+        .config-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .config-status.success {
+            background: #d1fae5;
+            border: 1px solid #10b981;
+            color: #065f46;
+        }
+
+        .config-status.error {
+            background: #fee2e2;
+            border: 1px solid #ef4444;
+            color: #991b1b;
+        }
+
+        .config-status.warning {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            color: #92400e;
+        }
+
+        .upload-area {
+            border: 3px dashed #f472b6;
+            border-radius: 12px;
+            padding: 50px;
+            text-align: center;
+            margin: 30px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .upload-area:hover {
+            border-color: #ec4899;
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-2px);
+        }
+
+        .upload-area.dragover {
+            border-color: #ec4899;
+            background: rgba(244, 114, 182, 0.1);
+        }
+
+        .upload-area.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            border-color: #d1d5db;
+        }
+
+        .upload-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            color: #f472b6;
+        }
+
+        .upload-text {
+            font-size: 1.5em;
+            color: #374151;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .upload-hint {
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #f472b6, #c084fc);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(244, 114, 182, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+            box-shadow: 0 8px 20px rgba(107, 114, 128, 0.3);
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.9em;
+        }
+
+        /* 进度指示器 */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f472b6, #c084fc);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .upload-log {
+            background: #1f2937;
+            color: #f9fafb;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: monospace;
+            font-size: 0.9em;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .log-entry {
+            margin: 5px 0;
+            padding: 2px 0;
+        }
+
+        .log-info { color: #60a5fa; }
+        .log-success { color: #34d399; }
+        .log-error { color: #f87171; }
+        .log-warning { color: #fbbf24; }
+
+        /* 访客视图样式 */
+        .visitor-content {
+            display: block;
+        }
+
+        .visitor-content.hidden {
+            display: none;
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .report-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid #f472b6;
+        }
+
+        .report-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .report-header {
+            background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+            padding: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .report-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .report-meta {
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        .report-content {
+            padding: 20px;
+        }
+
+        .report-preview {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background: #f9fafb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            font-size: 0.9em;
+        }
+
+        .report-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* 筛选器样式 */
+        .filters-section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .filters-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            min-width: 120px;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.9em;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.9em;
+            background: white;
+            transition: border-color 0.2s ease;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: #f472b6;
+            box-shadow: 0 0 0 3px rgba(244, 114, 182, 0.2);
+        }
+
+        /* 视图控制样式 */
+        .view-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .view-modes {
+            display: flex;
+            gap: 10px;
+        }
+
+        .view-mode-btn {
+            padding: 8px 16px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .view-mode-btn:hover {
+            border-color: #f472b6;
+            background: #fdf2f8;
+        }
+
+        .view-mode-btn.active {
+            border-color: #f472b6;
+            background: #f472b6;
+            color: white;
+        }
+
+        .results-info {
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        /* 状态信息栏 */
+        .status-bar {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+            color: #6b7280;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+        }
+
+        .status-dot.loading {
+            background: #f59e0b;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.error {
+            background: #ef4444;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* 提示消息 */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            max-width: 400px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            background: #ef4444;
+        }
+
+        .toast.warning {
+            background: #f59e0b;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #f472b6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .admin-entrance {
+                position: static;
+                margin-top: 15px;
+            }
+
+            .config-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .reports-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .filters-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                min-width: auto;
+            }
+
+            .status-bar {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 加载遮罩 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- 管理员认证弹窗 -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-modal-content">
+            <h3>🔐 管理员验证</h3>
+            <p style="color: #6b7280; margin-bottom: 20px;">请输入管理员密码以访问管理功能</p>
+            <input type="password" id="adminPassword" placeholder="请输入管理员密码">
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button class="btn" onclick="verifyAdmin()">确认</button>
+                <button class="btn btn-secondary" onclick="closeAuthModal()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页面头部 -->
+    <div class="header">
+        <button class="admin-entrance" id="adminBtn" onclick="toggleAdminMode()">
+            🔧 管理员入口
+        </button>
+        <h1>📊 玫瑰-品类 报告分享中心</h1>
+        <p id="headerDesc">最新市场报告 · 在线查看 · 实时更新</p>
+    </div>
+
+    <div class="container">
+        <!-- 管理员功能区域 -->
+        <div class="admin-section" id="adminSection">
+            <h2 style="color: #ec4899; margin-bottom: 20px;">🚀 GitHub自动同步管理</h2>
+            
+            <!-- GitHub配置 -->
+            <div class="github-config">
+                <h4>🔧 GitHub API 配置</h4>
+                <p style="margin-bottom: 15px;">配置GitHub仓库信息，实现自动同步上传</p>
+                
+                <div class="config-grid">
+                    <div class="config-item">
+                        <label>GitHub用户名</label>
+                        <input type="text" id="githubUsername" placeholder="your-username" onchange="saveGitHubConfig()">
+                    </div>
+                    <div class="config-item">
+                        <label>仓库名称</label>
+                        <input type="text" id="githubRepo" placeholder="reports-center" onchange="saveGitHubConfig()">
+                    </div>
+                    <div class="config-item">
+                        <label>分支名称</label>
+                        <input type="text" id="githubBranch" placeholder="main" value="main" onchange="saveGitHubConfig()">
+                    </div>
+                    <div class="config-item">
+                        <label>访问令牌 (Token)</label>
+                        <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxx" onchange="saveGitHubConfig()">
+                    </div>
+                </div>
+
+                <div class="config-status" id="gitHubConfigStatus">
+                    <div class="status-dot warning"></div>
+                    <span>请完成GitHub配置以启用自动同步功能</span>
+                </div>
+
+                <div style="margin-top: 15px;">
+                    <button class="btn btn-secondary btn-sm" onclick="testGitHubConnection()">
+                        🔍 测试连接
+                    </button>
+                    <button class="btn btn-secondary btn-sm" onclick="showTokenHelp()">
+                        🆘 Token获取帮助
+                    </button>
+                </div>
+            </div>
+
+            <!-- 上传区域 -->
+            <div class="upload-area" id="uploadArea" onclick="triggerFileInput()" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                <div class="upload-icon">📁</div>
+                <div class="upload-text" id="uploadText">上传报告文件</div>
+                <div class="upload-hint" id="uploadHint">拖拽HTML文件到此处或点击选择文件，将自动同步到GitHub</div>
+                <button class="btn" id="uploadBtn">🔎 选择文件</button>
+            </div>
+
+            <input type="file" class="file-input" id="fileInput" accept=".html,.htm" onchange="handleFileSelect(event)">
+
+            <!-- 进度条 -->
+            <div class="progress-bar" id="progressBar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <!-- 上传日志 -->
+            <div class="upload-log" id="uploadLog"></div>
+        </div>
+
+        <!-- 访客内容区域 -->
+        <div class="visitor-content" id="visitorContent">
+            <!-- 状态栏 -->
+            <div class="status-bar">
+                <div class="status-indicator">
+                    <div class="status-dot" id="dataStatus"></div>
+                    <span id="dataStatusText">正在加载数据...</span>
+                </div>
+                <div id="lastUpdateTime">最后更新：--</div>
+            </div>
+
+            <!-- 筛选控制栏 -->
+            <div class="filters-section">
+                <div class="filters-row">
+                    <div class="filter-group">
+                        <label>📅 年份</label>
+                        <select id="yearFilter" onchange="applyFilters()">
+                            <option value="all">全部年份</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>📆 月份</label>
+                        <select id="monthFilter" onchange="applyFilters()">
+                            <option value="all">全部月份</option>
+                            <option value="01">1月</option>
+                            <option value="02">2月</option>
+                            <option value="03">3月</option>
+                            <option value="04">4月</option>
+                            <option value="05">5月</option>
+                            <option value="06">6月</option>
+                            <option value="07">7月</option>
+                            <option value="08">8月</option>
+                            <option value="09">9月</option>
+                            <option value="10">10月</option>
+                            <option value="11">11月</option>
+                            <option value="12">12月</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>📊 类型</label>
+                        <select id="typeFilter" onchange="applyFilters()">
+                            <option value="all">全部类型</option>
+                            <option value="market-trends">市场趋势报告</option>
+                            <option value="market-data">市场数据月报</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>🔍 搜索</label>
+                        <input type="text" id="searchInput" placeholder="搜索报告..." onkeyup="applyFilters()">
+                    </div>
+                    <div class="filter-group">
+                        <button class="btn btn-secondary" onclick="resetFilters()">🔄 重置</button>
+                        <button class="btn btn-secondary" onclick="refreshData()">⬇️ 刷新数据</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 显示模式切换 -->
+            <div class="view-controls">
+                <div class="view-modes">
+                    <button class="view-mode-btn active" data-mode="grid" onclick="switchViewMode('grid')">
+                        🎯 卡片视图
+                    </button>
+                </div>
+                <div class="results-info">
+                    <span id="resultsCount">共 0 个报告</span>
+                </div>
+            </div>
+
+            <!-- 卡片视图 -->
+            <div class="reports-grid" id="reportsGrid">
+                <!-- 报告卡片将在这里动态生成 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 提示消息 -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // 全局变量
+        let uploadedFiles = [];
+        let isAdminMode = false;
+        let filteredFiles = [];
+        let dataSource = 'unknown';
+        let isUploading = false;
+        
+        // 管理员密码
+        const ADMIN_PASSWORD = 'aroseisarose';
+
+        // GitHub配置
+        let gitHubConfig = {
+            username: '',
+            repo: '',
+            branch: 'main',
+            token: ''
+        };
+
+        // GitHub API基础URL
+        const GITHUB_API_BASE = 'https://api.github.com';
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            loadGitHubConfig();
+            initializePage();
+        });
+
+        // === GitHub配置管理 ===
+
+        // 加载GitHub配置
+        function loadGitHubConfig() {
+            const saved = localStorage.getItem('gitHubConfig');
+            if (saved) {
+                gitHubConfig = { ...gitHubConfig, ...JSON.parse(saved) };
+                document.getElementById('githubUsername').value = gitHubConfig.username;
+                document.getElementById('githubRepo').value = gitHubConfig.repo;
+                document.getElementById('githubBranch').value = gitHubConfig.branch;
+                document.getElementById('githubToken').value = gitHubConfig.token;
+                updateGitHubConfigStatus();
+            }
+        }
+
+        // 保存GitHub配置
+        function saveGitHubConfig() {
+            gitHubConfig = {
+                username: document.getElementById('githubUsername').value.trim(),
+                repo: document.getElementById('githubRepo').value.trim(),
+                branch: document.getElementById('githubBranch').value.trim() || 'main',
+                token: document.getElementById('githubToken').value.trim()
+            };
+
+            localStorage.setItem('gitHubConfig', JSON.stringify(gitHubConfig));
+            updateGitHubConfigStatus();
+        }
+
+        // 更新GitHub配置状态
+        function updateGitHubConfigStatus() {
+            const statusEl = document.getElementById('gitHubConfigStatus');
+            const uploadArea = document.getElementById('uploadArea');
+            const uploadBtn = document.getElementById('uploadBtn');
+            
+            if (isGitHubConfigured()) {
+                statusEl.className = 'config-status success';
+                statusEl.innerHTML = `
+                    <div class="status-dot"></div>
+                    <span>✅ GitHub配置完成，可以自动同步到 ${gitHubConfig.username}/${gitHubConfig.repo}</span>
+                `;
+                uploadArea.classList.remove('disabled');
+                uploadBtn.disabled = false;
+                document.getElementById('uploadHint').textContent = '拖拽HTML文件到此处或点击选择文件，将自动同步到GitHub';
+            } else {
+                statusEl.className = 'config-status warning';
+                statusEl.innerHTML = `
+                    <div class="status-dot warning"></div>
+                    <span>⚠️ 请完成GitHub配置以启用自动同步功能</span>
+                `;
+                uploadArea.classList.add('disabled');
+                uploadBtn.disabled = true;
+                document.getElementById('uploadHint').textContent = '请先完成GitHub配置才能上传文件';
+            }
+        }
+
+        // 检查GitHub是否已配置
+        function isGitHubConfigured() {
+            return gitHubConfig.username && gitHubConfig.repo && gitHubConfig.token;
+        }
+
+        // 测试GitHub连接
+        async function testGitHubConnection() {
+            if (!isGitHubConfigured()) {
+                showToast('❌ 请先完成GitHub配置！', 'error');
+                return;
+            }
+
+            try {
+                showLoading(true);
+                const response = await fetch(`${GITHUB_API_BASE}/repos/${gitHubConfig.username}/${gitHubConfig.repo}`, {
+                    headers: {
+                        'Authorization': `token ${gitHubConfig.token}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+
+                if (response.ok) {
+                    const repo = await response.json();
+                    showToast(`✅ GitHub连接成功！仓库：${repo.full_name}`);
+                    
+                    const statusEl = document.getElementById('gitHubConfigStatus');
+                    statusEl.className = 'config-status success';
+                    statusEl.innerHTML = `
+                        <div class="status-dot"></div>
+                        <span>✅ GitHub连接测试成功，仓库访问正常</span>
+                    `;
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+            } catch (error) {
+                console.error('GitHub连接测试失败:', error);
+                showToast('❌ GitHub连接失败：' + error.message, 'error');
+                
+                const statusEl = document.getElementById('gitHubConfigStatus');
+                statusEl.className = 'config-status error';
+                statusEl.innerHTML = `
+                    <div class="status-dot error"></div>
+                    <span>❌ GitHub连接失败，请检查配置</span>
+                `;
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // 显示Token获取帮助
+        function showTokenHelp() {
+            const helpText = `
+📋 GitHub Personal Access Token 获取步骤：
+
+1. 访问 GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
+2. 点击 "Generate new token (classic)"
+3. 设置 Token 名称，如："Reports System"
+4. 选择过期时间（建议选择较长时间）
+5. 勾选以下权限：
+   ✅ repo (完整仓库访问权限)
+   ✅ workflow (如果需要触发Actions)
+6. 点击 "Generate token"
+7. 复制生成的token（以ghp_开头）
+8. 粘贴到上方的"访问令牌"输入框
+
+⚠️ 重要提醒：
+- Token只显示一次，请立即复制保存
+- Token具有与你的GitHub账号相同的权限，请妥善保管
+- 建议定期更换Token以确保安全
+            `;
+
+            alert(helpText);
+        }
+
+        // === GitHub API操作 ===
+
+        // 获取文件的SHA值（用于更新文件）
+        async function getFileSHA(path) {
+            try {
+                const response = await fetch(
+                    `${GITHUB_API_BASE}/repos/${gitHubConfig.username}/${gitHubConfig.repo}/contents/${path}`,
+                    {
+                        headers: {
+                            'Authorization': `token ${gitHubConfig.token}`,
+                            'Accept': 'application/vnd.github.v3+json'
+                        }
+                    }
+                );
+
+                if (response.ok) {
+                    const data = await response.json();
+                    return data.sha;
+                }
+                return null;
+            } catch (error) {
+                console.log('文件不存在，将创建新文件');
+                return null;
+            }
+        }
+
+        // 上传文件到GitHub
+        async function uploadToGitHub(path, content, message, isUpdate = false, sha = null) {
+            const url = `${GITHUB_API_BASE}/repos/${gitHubConfig.username}/${gitHubConfig.repo}/contents/${path}`;
+            
+            const body = {
+                message: message,
+                content: btoa(unescape(encodeURIComponent(content))), // Base64编码
+                branch: gitHubConfig.branch
+            };
+
+            if (isUpdate && sha) {
+                body.sha = sha;
+            }
+
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${gitHubConfig.token}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(`GitHub API错误: ${error.message || response.statusText}`);
+            }
+
+            return await response.json();
+        }
+
+        // 从GitHub加载reports.json
+        async function loadReportsFromGitHub() {
+            try {
+                const response = await fetch(
+                    `${GITHUB_API_BASE}/repos/${gitHubConfig.username}/${gitHubConfig.repo}/contents/data/reports.json`,
+                    {
+                        headers: {
+                            'Authorization': `token ${gitHubConfig.token}`,
+                            'Accept': 'application/vnd.github.v3+json'
+                        }
+                    }
+                );
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const content = atob(data.content);
+                    const reportsData = JSON.parse(content);
+                    return reportsData.reports || [];
+                }
+                return [];
+            } catch (error) {
+                console.log('GitHub reports.json加载失败:', error);
+                return [];
+            }
+        }
+
+        // 更新GitHub上的reports.json
+        async function updateReportsIndex(newReport) {
+            // 获取当前的reports.json
+            let currentReports = await loadReportsFromGitHub();
+            
+            // 检查是否已存在，如果存在则更新，否则添加
+            const existingIndex = currentReports.findIndex(r => r.key === newReport.key);
+            if (existingIndex !== -1) {
+                currentReports[existingIndex] = newReport;
+            } else {
+                currentReports.push(newReport);
+            }
+
+            // 按时间排序
+            currentReports.sort((a, b) => {
+                const dateA = new Date(a.year, parseInt(a.month) - 1);
+                const dateB = new Date(b.year, parseInt(b.month) - 1);
+                return dateB - dateA;
+            });
+
+            // 生成新的reports.json内容
+            const reportsData = {
+                reports: currentReports,
+                lastUpdated: new Date().toISOString()
+            };
+
+            const content = JSON.stringify(reportsData, null, 2);
+            
+            // 获取文件SHA（用于更新）
+            const sha = await getFileSHA('data/reports.json');
+            
+            // 上传更新后的reports.json
+            await uploadToGitHub(
+                'data/reports.json',
+                content,
+                `更新报告索引: ${newReport.title}`,
+                !!sha,
+                sha
+            );
+
+            return currentReports;
+        }
+
+        // === 文件上传处理 ===
+
+        // 记录上传日志
+        function addUploadLog(message, type = 'info') {
+            const logEl = document.getElementById('uploadLog');
+            logEl.style.display = 'block';
+            
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            
+            logEl.appendChild(entry);
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+
+        // 更新进度条
+        function updateProgress(percent) {
+            const progressBar = document.getElementById('progressBar');
+            const progressFill = document.getElementById('progressFill');
+            
+            if (percent > 0) {
+                progressBar.style.display = 'block';
+                progressFill.style.width = percent + '%';
+            } else {
+                progressBar.style.display = 'none';
+            }
+        }
+
+        // 处理文件上传
+        async function processFile(file) {
+            if (!isGitHubConfigured()) {
+                showToast('❌ 请先完成GitHub配置！', 'error');
+                return;
+            }
+
+            if (isUploading) {
+                showToast('⚠️ 正在上传中，请稍候...', 'warning');
+                return;
+            }
+
+            // 验证文件名格式
+            const fileName = file.name;
+            const regex = /^(market-trends|market-data)-(\d{4})(\d{2})\.html?$/i;
+            const match = fileName.match(regex);
+
+            if (!match) {
+                showToast('❌ 文件名格式错误！请按照规范命名：market-trends-YYYYMM.html', 'error');
+                return;
+            }
+
+            const [, type, year, month] = match;
+            const reportKey = `${type}-${year}${month}`;
+
+            try {
+                isUploading = true;
+                updateProgress(10);
+                addUploadLog('开始处理文件: ' + fileName);
+
+                // 禁用上传区域
+                const uploadArea = document.getElementById('uploadArea');
+                const uploadBtn = document.getElementById('uploadBtn');
+                uploadArea.classList.add('disabled');
+                uploadBtn.disabled = true;
+                document.getElementById('uploadText').textContent = '正在上传...';
+
+                // 读取文件内容
+                addUploadLog('读取文件内容...');
+                const content = await readFileContent(file);
+                updateProgress(20);
+
+                // 创建报告数据
+                const reportData = {
+                    key: reportKey,
+                    name: fileName,
+                    type: type,
+                    year: year,
+                    month: month,
+                    title: `${year}年${parseInt(month)}月${type === 'market-trends' ? '市场趋势报告' : '市场数据月报'}`,
+                    uploadTime: new Date().toLocaleString('zh-CN'),
+                    size: file.size,
+                    url: `./reports/${fileName}`
+                };
+
+                // 上传报告文件到GitHub
+                addUploadLog('上传报告文件到GitHub...');
+                updateProgress(40);
+
+                const reportPath = `reports/${fileName}`;
+                const reportSHA = await getFileSHA(reportPath);
+                
+                await uploadToGitHub(
+                    reportPath,
+                    content,
+                    `${reportSHA ? '更新' : '添加'}报告: ${reportData.title}`,
+                    !!reportSHA,
+                    reportSHA
+                );
+
+                addUploadLog('报告文件上传成功', 'success');
+                updateProgress(70);
+
+                // 更新reports.json索引
+                addUploadLog('更新报告索引...');
+                const updatedReports = await updateReportsIndex(reportData);
+                
+                addUploadLog('报告索引更新成功', 'success');
+                updateProgress(90);
+
+                // 更新本地数据
+                uploadedFiles = updatedReports;
+                localStorage.setItem('uploadedFiles', JSON.stringify(uploadedFiles));
+
+                updateProgress(100);
+                addUploadLog(`✅ 上传完成！报告已发布到: https://${gitHubConfig.username}.github.io/${gitHubConfig.repo}/`, 'success');
+
+                // 更新界面
+                updateFilters();
+                applyFilters();
+                
+                showToast('🎉 报告上传成功并已自动同步到GitHub！');
+
+                // 延迟清理进度条
+                setTimeout(() => {
+                    updateProgress(0);
+                }, 2000);
+
+            } catch (error) {
+                console.error('文件上传失败:', error);
+                addUploadLog('❌ 上传失败: ' + error.message, 'error');
+                showToast('❌ 上传失败：' + error.message, 'error');
+                updateProgress(0);
+            } finally {
+                isUploading = false;
+                
+                // 恢复上传区域
+                const uploadArea = document.getElementById('uploadArea');
+                const uploadBtn = document.getElementById('uploadBtn');
+                uploadArea.classList.remove('disabled');
+                uploadBtn.disabled = false;
+                document.getElementById('uploadText').textContent = '上传报告文件';
+            }
+        }
+
+        // 读取文件内容
+        function readFileContent(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.onerror = reject;
+                reader.readAsText(file, 'UTF-8');
+            });
+        }
+
+        // === 界面控制和数据加载 ===
+
+        // 初始化页面
+        async function initializePage() {
+            showLoading(true);
+            updateDataStatus('loading', '正在加载数据...');
+            
+            try {
+                if (isGitHubConfigured()) {
+                    // 尝试从GitHub加载数据
+                    uploadedFiles = await loadReportsFromGitHub();
+                    dataSource = 'github';
+                    updateDataStatus('success', '已连接到GitHub数据源');
+                } else {
+                    // 使用本地存储
+                    loadFromLocalStorage();
+                    dataSource = 'localStorage';
+                    updateDataStatus('success', '使用本地数据源');
+                }
+            } catch (error) {
+                console.warn('数据加载失败:', error);
+                loadFromLocalStorage();
+                dataSource = 'localStorage';
+                updateDataStatus('error', '数据加载失败，使用本地备份');
+            }
+            
+            showLoading(false);
+            showVisitorMode();
+            
+            if (uploadedFiles.length > 0) {
+                updateFilters();
+                applyFilters();
+            } else {
+                showEmptyState();
+            }
+        }
+
+        // 从本地存储加载数据
+        function loadFromLocalStorage() {
+            const stored = localStorage.getItem('uploadedFiles');
+            uploadedFiles = stored ? JSON.parse(stored) : [];
+        }
+
+        // 刷新数据
+        async function refreshData() {
+            await initializePage();
+            showToast('✅ 数据已刷新！');
+        }
+
+        // 更新数据状态显示
+        function updateDataStatus(status, message) {
+            const statusDot = document.getElementById('dataStatus');
+            const statusText = document.getElementById('dataStatusText');
+            
+            statusDot.className = `status-dot ${status}`;
+            statusText.textContent = message;
+        }
+
+        // 显示/隐藏加载遮罩
+        function showLoading(show) {
+            document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
+        }
+
+        // === 管理员模式控制 ===
+
+        // 切换管理员模式
+        function toggleAdminMode() {
+            if (isAdminMode) {
+                showVisitorMode();
+            } else {
+                showAuthModal();
+            }
+        }
+
+        // 显示管理员认证弹窗
+        function showAuthModal() {
+            document.getElementById('authModal').style.display = 'flex';
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('adminPassword').focus();
+        }
+
+        // 关闭认证弹窗
+        function closeAuthModal() {
+            document.getElementById('authModal').style.display = 'none';
+        }
+
+        // 验证管理员密码
+        function verifyAdmin() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === ADMIN_PASSWORD) {
+                closeAuthModal();
+                showAdminMode();
+                showToast('✅ 管理员验证成功！');
+            } else {
+                showToast('❌ 密码错误，请重新输入！', 'error');
+                document.getElementById('adminPassword').value = '';
+                document.getElementById('adminPassword').focus();
+            }
+        }
+
+        // 显示管理员模式
+        function showAdminMode() {
+            isAdminMode = true;
+            
+            document.getElementById('adminBtn').textContent = '👤 退出管理';
+            document.getElementById('adminBtn').classList.add('admin-mode');
+            document.getElementById('headerDesc').textContent = '管理员模式 · 自动同步 · GitHub集成';
+            
+            document.getElementById('adminSection').classList.add('show');
+            updateGitHubConfigStatus();
+        }
+
+        // 显示访客模式
+        function showVisitorMode() {
+            isAdminMode = false;
+            
+            document.getElementById('adminBtn').textContent = '🔧 管理员入口';
+            document.getElementById('adminBtn').classList.remove('admin-mode');
+            document.getElementById('headerDesc').textContent = '最新市场报告 · 在线查看 · 实时更新';
+            
+            document.getElementById('adminSection').classList.remove('show');
+            document.getElementById('visitorContent').classList.remove('hidden');
+            
+            if (uploadedFiles.length > 0) {
+                updateFilters();
+                applyFilters();
+            }
+        }
+
+        // === 文件拖拽处理 ===
+
+        function triggerFileInput() {
+            if (!isUploading) {
+                document.getElementById('fileInput').click();
+            }
+        }
+
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            if (files.length > 0) {
+                processFile(files[0]);
+            }
+        }
+
+        function handleDragOver(event) {
+            if (!isUploading) {
+                event.preventDefault();
+                event.currentTarget.classList.add('dragover');
+            }
+        }
+
+        function handleDragLeave(event) {
+            event.currentTarget.classList.remove('dragover');
+        }
+
+        function handleDrop(event) {
+            event.preventDefault();
+            event.currentTarget.classList.remove('dragover');
+            
+            if (!isUploading) {
+                const files = event.dataTransfer.files;
+                if (files.length > 0) {
+                    processFile(files[0]);
+                }
+            }
+        }
+
+        // === 访客视图功能 ===
+
+        // 更新筛选器选项
+        function updateFilters() {
+            const yearFilter = document.getElementById('yearFilter');
+            const years = [...new Set(uploadedFiles.map(f => f.year))].sort((a, b) => b - a);
+            
+            yearFilter.innerHTML = '<option value="all">全部年份</option>';
+            years.forEach(year => {
+                yearFilter.innerHTML += `<option value="${year}">${year}年</option>`;
+            });
+        }
+
+        // 应用筛选
+        function applyFilters() {
+            const yearFilter = document.getElementById('yearFilter').value;
+            const monthFilter = document.getElementById('monthFilter').value;
+            const typeFilter = document.getElementById('typeFilter').value;
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+
+            filteredFiles = uploadedFiles.filter(file => {
+                const matchYear = yearFilter === 'all' || file.year === yearFilter;
+                const matchMonth = monthFilter === 'all' || file.month === monthFilter;
+                const matchType = typeFilter === 'all' || file.type === typeFilter;
+                const matchSearch = searchInput === '' || 
+                    file.title.toLowerCase().includes(searchInput) ||
+                    file.name.toLowerCase().includes(searchInput);
+
+                return matchYear && matchMonth && matchType && matchSearch;
+            });
+
+            updateReportsDisplay();
+        }
+
+        // 重置筛选器
+        function resetFilters() {
+            document.getElementById('yearFilter').value = 'all';
+            document.getElementById('monthFilter').value = 'all';
+            document.getElementById('typeFilter').value = 'all';
+            document.getElementById('searchInput').value = '';
+            applyFilters();
+        }
+
+        // 切换视图模式
+        function switchViewMode(mode) {
+            document.querySelectorAll('.view-mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
+            updateReportsDisplay();
+        }
+
+        // 更新报告显示
+        function updateReportsDisplay() {
+            const displayFiles = filteredFiles.length === 0 && uploadedFiles.length > 0 ? uploadedFiles : filteredFiles;
+            
+            document.getElementById('resultsCount').textContent = `共 ${displayFiles.length} 个报告`;
+
+            if (displayFiles.length === 0) {
+                showEmptyState();
+                return;
+            }
+
+            updateGridView(displayFiles);
+        }
+
+        // 显示空状态
+        function showEmptyState() {
+            const emptyHTML = `
+                <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #9ca3af;">
+                    <div style="font-size: 4em; margin-bottom: 20px;">📄</div>
+                    <h3>暂无可用报告</h3>
+                    <p>${uploadedFiles.length === 0 ? '尚未发布任何报告文件' : '没有匹配的报告，尝试调整筛选条件'}</p>
+                    ${dataSource === 'localStorage' ? '<p style="color: #f59e0b; margin-top: 10px;">💡 提示：当前使用本地模式，配置GitHub后可实现在线同步</p>' : ''}
+                </div>
+            `;
+            
+            document.getElementById('reportsGrid').innerHTML = emptyHTML;
+        }
+
+        // 更新网格视图
+        function updateGridView(files) {
+            const sortedFiles = [...files].sort((a, b) => {
+                const dateA = new Date(a.year, parseInt(a.month) - 1);
+                const dateB = new Date(b.year, parseInt(b.month) - 1);
+                return dateB - dateA;
+            });
+
+            const reportsGrid = document.getElementById('reportsGrid');
+            reportsGrid.innerHTML = sortedFiles.map(file => {
+                const reportUrl = isGitHubConfigured() && dataSource === 'github' 
+                    ? `https://${gitHubConfig.username}.github.io/${gitHubConfig.repo}/reports/${file.name}`
+                    : file.url;
+                
+                return `
+                    <div class="report-card">
+                        <div class="report-header">
+                            <div class="report-title">${file.title}</div>
+                            <div class="report-meta">
+                                ${file.type === 'market-trends' ? '📈 市场趋势' : '📊 数据分析'} · 
+                                更新时间：${file.uploadTime.split(' ')[0]}
+                            </div>
+                        </div>
+                        <div class="report-content">
+                            <div class="report-preview">
+                                📄 HTML报告预览
+                            </div>
+                            <div class="report-actions">
+                                <button class="btn btn-sm" onclick="openReport('${reportUrl}', '${file.title}')">
+                                    🔗 打开报告
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 打开报告
+        function openReport(url, title) {
+            window.open(url, '_blank', 'width=1200,height=800');
+        }
+
+        // === 工具函数 ===
+
+        // 显示提示消息
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast show' + (type === 'error' ? ' error' : type === 'warning' ? ' warning' : '');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        // 监听回车键进行密码验证
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && document.getElementById('authModal').style.display === 'flex') {
+                verifyAdmin();
+            }
+        });
+    </script>
+</body>
+</html>
