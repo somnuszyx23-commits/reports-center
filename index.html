@@ -808,8 +808,10 @@
                         <input type="text" id="searchInput" placeholder="搜索报告..." onkeyup="applyFilters()">
                     </div>
                     <div class="filter-group">
-                        <button class="btn btn-secondary" onclick="resetFilters()">🔄 重置</button>
-                        <button class="btn btn-secondary" onclick="refreshData()">⬇️ 刷新数据</button>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn btn-secondary" onclick="resetFilters()">🔄 重置</button>
+                            <button class="btn btn-secondary" onclick="refreshData()">⬇️ 刷新数据</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -860,6 +862,11 @@
 
         // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', function() {
+            // 验证页面编码
+            if (document.characterSet !== 'UTF-8') {
+                console.warn('页面编码不是UTF-8:', document.characterSet);
+            }
+            
             loadGitHubConfig();
             initializePage();
         });
@@ -1149,9 +1156,16 @@
         async function uploadToGitHub(path, content, message, isUpdate = false, sha = null) {
             const url = `${GITHUB_API_BASE}/repos/${gitHubConfig.username}/${gitHubConfig.repo}/contents/${path}`;
             
+            // 修复Base64编码处理中文的问题
+            const base64Content = btoa(
+                new Uint8Array(
+                    new TextEncoder().encode(content)
+                ).reduce((data, byte) => data + String.fromCharCode(byte), '')
+            );
+            
             const body = {
                 message: message,
-                content: btoa(unescape(encodeURIComponent(content))), // Base64编码
+                content: base64Content,
                 branch: gitHubConfig.branch
             };
 
@@ -1192,7 +1206,16 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    const content = atob(data.content);
+                    
+                    // 修复Base64解码处理中文的问题
+                    const base64Content = data.content.replace(/\s/g, '');
+                    const binaryString = atob(base64Content);
+                    const bytes = new Uint8Array(binaryString.length);
+                    for (let i = 0; i < binaryString.length; i++) {
+                        bytes[i] = binaryString.charCodeAt(i);
+                    }
+                    const content = new TextDecoder('utf-8').decode(bytes);
+                    
                     const reportsData = JSON.parse(content);
                     return reportsData.reports || [];
                 }
@@ -1229,7 +1252,13 @@
                 lastUpdated: new Date().toISOString()
             };
 
+            // 确保JSON序列化时正确处理中文字符
             const content = JSON.stringify(reportsData, null, 2);
+            
+            // 验证JSON内容是否包含正确的中文字符
+            if (!/[\u4e00-\u9fa5]/.test(content)) {
+                console.warn('JSON内容可能存在编码问题');
+            }
             
             // 获取文件SHA（用于更新）
             const sha = await getFileSHA('data/reports.json');
@@ -1247,6 +1276,22 @@
         }
 
         // === 文件上传处理 ===
+
+        // 生成报告标题（确保中文编码正确）
+        function generateReportTitle(year, month, type) {
+            const monthNum = parseInt(month);
+            const typeText = type === 'market-trends' ? '市场趋势报告' : '市场数据月报';
+            
+            // 使用模板字符串并确保字符编码正确
+            const title = `${year}年${monthNum}月${typeText}`;
+            
+            // 验证标题是否包含正确的中文字符
+            if (!/[\u4e00-\u9fa5]/.test(title)) {
+                console.warn('标题可能存在编码问题:', title);
+            }
+            
+            return title;
+        }
 
         // 记录上传日志
         function addUploadLog(message, type = 'info') {
@@ -1323,11 +1368,17 @@
                     type: type,
                     year: year,
                     month: month,
-                    title: `${year}年${parseInt(month)}月${type === 'market-trends' ? '市场趋势报告' : '市场数据月报'}`,
+                    title: generateReportTitle(year, month, type),
                     uploadTime: new Date().toLocaleString('zh-CN'),
                     size: file.size,
                     url: `./reports/${fileName}`
                 };
+
+                // 调试：验证标题编码
+                addUploadLog(`生成标题: ${reportData.title}`, 'info');
+                if (!/[\u4e00-\u9fa5]/.test(reportData.title)) {
+                    addUploadLog('⚠️ 警告：标题可能存在编码问题', 'warning');
+                }
 
                 // 上传报告文件到GitHub
                 addUploadLog('上传报告文件到GitHub...');
