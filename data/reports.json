@@ -1,6 +1,17 @@
 {
   "reports": [
     {
+      "key": "market-trends-202508",
+      "name": "market-trends-202508.html",
+      "type": "market-trends",
+      "year": "2025",
+      "month": "08",
+      "title": "2025年8月市场趋势报告",
+      "uploadTime": "2025/9/12 18:30:04",
+      "size": 122510,
+      "url": "./reports/market-trends-202508.html"
+    },
+    {
       "key": "market-trends-202507",
       "name": "market-trends-202507.html",
       "type": "market-trends",
@@ -23,5 +34,5 @@
       "url": "./reports/market-trends-202506.html"
     }
   ],
-  "lastUpdated": "2025-08-19T09:14:37.739Z"
+  "lastUpdated": "2025-09-12T10:30:07.623Z"
 }
