@@ -1,0 +1,2593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025年8月市场资料分享版</title>
+    <style>
+        /* 全局重置与基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fdf2f8 0%, #fdf2f8 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #374151;
+            min-height: 100vh;
+        }
+
+        /* 导航侧边栏样式 */
+        .nav-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(180deg, #f472b6 0%, #c084fc 100%);
+            z-index: 1000;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-header {
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-header h3 {
+            color: white;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .nav-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9em;
+        }
+
+        .nav-menu {
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 12px 25px;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            font-size: 0.95em;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-left-color: white;
+        }
+
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-left-color: white;
+            font-weight: 600;
+        }
+
+        .nav-item .emoji {
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+
+        /* 移动端导航切换按钮样式 */
+        .nav-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: #f472b6;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        /* 主内容区域样式 */
+        .main-content {
+            margin-left: 280px;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(244, 114, 182, 0.1);
+        }
+
+        /* 头部样式 */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px;
+            background: linear-gradient(135deg, #f472b6 0%, #c084fc 100%);
+            border-radius: 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin: 0;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.3em;
+            margin: 15px 0 0 0;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 章节通用样式 */
+        .section {
+            margin-bottom: 60px;
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(244, 114, 182, 0.08);
+            border-left: 8px solid #f472b6;
+            position: relative;
+            scroll-margin-top: 20px;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #fce7f3 0%, transparent 70%);
+            border-radius: 0 20px 0 100px;
+            pointer-events: none;
+        }
+
+        .section h2 {
+            color: #ec4899;
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section h3 {
+            color: #be185d;
+            font-size: 1.6em;
+            margin: 30px 0 20px 0;
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #fce7f3 0%, #fdf2f8 100%);
+            border-radius: 12px;
+            border-left: 5px solid #f472b6;
+        }
+
+        /* 数据高亮显示区域 */
+        .data-highlight {
+            background: linear-gradient(135deg, #fce7f3 0%, #e0e7ff 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px solid #f472b6;
+            box-shadow: 0 5px 20px rgba(244, 114, 182, 0.1);
+        }
+
+        .data-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(236, 72, 153, 0.2);
+        }
+
+        .data-item:last-child {
+            border-bottom: none;
+        }
+
+        .data-value {
+            font-weight: bold;
+            color: #be185d;
+            font-size: 1.1em;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(244, 114, 182, 0.1);
+        }
+
+        /* 趋势网格布局 */
+        .trend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        /* 趋势卡片样式 */
+        .trend-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #fdf2f8 100%);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #fce7f3;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trend-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f472b6, #c084fc);
+            border-radius: 0 15px 0 100px;
+            opacity: 0.1;
+        }
+
+        .trend-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(244, 114, 182, 0.15);
+            border-color: #f472b6;
+        }
+
+        .trend-card h4 {
+            color: #be185d;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .trend-number {
+            background: linear-gradient(135deg, #f472b6, #c084fc);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1em;
+            box-shadow: 0 4px 15px rgba(244, 114, 182, 0.3);
+        }
+
+        /* 洞察框样式 */
+        .insight-box {
+            background: rgba(99, 102, 241, 0.1);
+            border: 2px solid #c7d2fe;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .insight-box h4 {
+            color: #4338ca;
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+        }
+
+        /* 列表样式 */
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin: 10px 0;
+            position: relative;
+        }
+
+        li::before {
+            content: '▸';
+            color: #f472b6;
+            font-weight: bold;
+            position: absolute;
+            left: -15px;
+        }
+
+        /* 表格样式 */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(244, 114, 182, 0.1);
+        }
+
+        .data-table th {
+            background: linear-gradient(135deg, #f472b6, #c084fc);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .data-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .data-table tr:hover {
+            background: #f8fafc;
+        }
+
+        /* 标签样式 */
+        .tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #f472b6, #c084fc);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            font-weight: 500;
+            box-shadow: 0 3px 10px rgba(244, 114, 182, 0.3);
+        }
+
+        /* 高亮统计样式 */
+        .highlight-stat {
+            background: linear-gradient(135deg, #f472b6, #c084fc);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+            box-shadow: 0 8px 25px rgba(244, 114, 182, 0.3);
+        }
+
+        .highlight-stat .number {
+            font-size: 2.2em;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .highlight-stat .label {
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+
+        /* 底部样式 */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background: linear-gradient(135deg, #fce7f3 0%, #e0e7ff 100%);
+            border-radius: 20px;
+            color: #be185d;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .nav-sidebar {
+                transform: translateX(-100%);
+            }
+
+            .nav-sidebar.open {
+                transform: translateX(0);
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 70px 20px 20px 20px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2.2em;
+            }
+
+            .trend-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 滚动行为 */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .emoji {
+            font-size: 1.3em;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="nav-sidebar" id="navSidebar">
+        <div class="nav-header">
+            <h3>📊 目录导航</h3>
+            <p>快速跳转到指定章节</p>
+        </div>
+<div class="nav-menu">
+    <a href="#healing-economy" class="nav-item">
+        <span class="emoji">🌿</span>PART1 疗愈经济
+    </a>
+    <a href="#perfume-market" class="nav-item">
+        <span class="emoji">🌹</span>PART2 香水香氛市场
+    </a>
+    <a href="#scalp-care" class="nav-item">
+        <span class="emoji">💆</span>PART3 头皮护理行业
+    </a>
+    <a href="#weight-management" class="nav-item">
+        <span class="emoji">🏃</span>PART4 体重管理食品
+    </a>
+    <a href="#beauty-needs" class="nav-item">
+        <span class="emoji">💄</span>PART5 小红书美护需求
+    </a>
+    <a href="#luxury-cosmetics" class="nav-item">
+        <span class="emoji">🏆</span>PART6 高端化妆品市场
+    </a>
+    <a href="#sephora-analysis" class="nav-item">
+        <span class="emoji">🏪</span>PART7 丝芙兰市场分析
+    </a>
+    <a href="#korean-beauty" class="nav-item">
+        <span class="emoji">🇰🇷</span>PART8 韩妆市场趋势
+    </a>
+    <a href="#menopause-beauty" class="nav-item">
+        <span class="emoji">🌸</span>PART9 更年期美容市场
+    </a>
+    <a href="#hair-dye-market" class="nav-item">
+        <span class="emoji">🎨</span>PART10 染发膏品类分析
+    </a>
+</div>
+    </nav>
+
+    <!-- 移动端导航切换按钮 -->
+    <button class="nav-toggle" id="navToggle">☰</button>
+
+    <!-- 主内容区域 -->
+    <div class="main-content">
+        <div class="container">
+            <div class="header">
+                <h1>市场趋势热点分享</h1>
+                <p>玫瑰品类部门内部资料分享-2025年8月</p>
+            </div>
+
+            <!-- PART1 疗愈经济 -->
+            <div class="section" id="healing-economy">
+                <h2><span class="emoji">🌿</span>PART1 疗愈经济</h2>
+
+                <h3>一、疗愈经济概述与核心洞察</h3>
+
+                <div class="insight-box">
+                    <h4>🎯 疗愈经济定义</h4>
+                    <p>疗愈经济是指以满足消费者身心健康需求为核心，通过多元化的产品和服务，帮助人们实现情感慰藉、压力释放和内在成长的新兴经济形态。其核心理念可概括为<strong>"物质从简，精神至上"</strong>。</p>
+                </div>
+
+                <h3>兴起背景</h3>
+                <ul>
+                    <li><strong>社会压力激增：</strong>现代生活节奏加快，工作压力增大</li>
+                    <li><strong>消费升级趋势：</strong>从物质消费向精神消费转移</li>
+                    <li><strong>亚健康问题：</strong>年轻群体身心健康问题日益突出</li>
+                    <li><strong>情感需求：</strong>追求内心平静与自我实现的渴望增强</li>
+                </ul>
+
+                <h3>市场规模</h3>
+                <p>根据2025年统计数据，中国疗愈经济相关产业规模：</p>
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span>文化产业</span>
+                        <span class="data-value">13万亿</span>
+                    </div>
+                    <div class="data-item">
+                        <span>旅游产业</span>
+                        <span class="data-value">5.5万亿</span>
+                    </div>
+                    <div class="data-item">
+                        <span>酒店产业</span>
+                        <span class="data-value">17万亿</span>
+                    </div>
+                    <div class="data-item">
+                        <span>美容产业</span>
+                        <span class="data-value">4600亿</span>
+                    </div>
+                    <div class="data-item">
+                        <span>商业地产</span>
+                        <span class="data-value">数十万亿</span>
+                    </div>
+                    <div class="data-item">
+                        <span>餐饮产业</span>
+                        <span class="data-value">5.2万亿</span>
+                    </div>
+                    <div class="data-item">
+                        <span>家居产业</span>
+                        <span class="data-value">4.5万亿</span>
+                    </div>
+                </div>
+
+                <h3>二、2025年十大消费趋势深度分析</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4><span class="trend-number">01</span>玄学疗方</h4>
+                        <ul>
+                            <li><strong>核心特征：</strong>佛珠、顺顺珠等好运祈福物品热销</li>
+                            <li><strong>市场洞察：</strong>满足精神层面的慰藉需求，体现年轻人对确定性的渴望</li>
+                            <li><strong>商业价值：</strong>低成本高情感价值，毛利率较高</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4><span class="trend-number">02</span>内在滋养</h4>
+                        <ul>
+                            <li><strong>核心特征：</strong>疗愈自己的N种良方，喂养心灵</li>
+                            <li><strong>市场洞察：</strong>个人成长类产品和服务需求激增</li>
+                            <li><strong>商业价值：</strong>知识付费、课程培训等领域增长潜力巨大</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4><span class="trend-number">03</span>情绪疗愈</h4>
+                        <ul>
+                            <li><strong>核心特征：</strong>情绪自由，发现生命中能量流动的真相</li>
+                            <li><strong>市场洞察：</strong>心理健康服务市场快速扩张</li>
+                            <li><strong>商业价值：</strong>专业化心理咨询、情绪管理工具需求旺盛</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4><span class="trend-number">04</span>氛围营造</h4>
+                        <ul>
+                            <li><strong>核心特征：</strong>打开消费开关，创造沉浸引导社交</li>
+                            <li><strong>市场洞察：</strong>体验经济兴起，环境设计价值凸显</li>
+                            <li><strong>商业价值：</strong>线下场景消费升级，客单价提升明显</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4><span class="trend-number">05</span>感官享受</h4>
+                        <ul>
+                            <li><strong>核心特征：</strong>以味诱人、以色悦人、以情感人</li>
+                            <li><strong>市场洞察：</strong>五感体验成为消费决策重要因素</li>
+                            <li><strong>商业价值：</strong>多感官营销策略效果显著</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4><span class="trend-number">06</span>运动舒压</h4>
+                        <ul>
+                            <li><strong>核心特征：</strong>瑜伽/攀岩/团操促进多巴胺分泌</li>
+                            <li><strong>市场洞察：</strong>运动疗愈成为主流减压方式</li>
+                            <li><strong>商业价值：</strong>健身产业向疗愈化转型升级</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4><span class="trend-number">07</span>心灵后退</h4>
+                        <ul>
+                            <li><strong>核心特征：</strong>领袖仿佛是一剂治疗失眠的"解药"</li>
+                            <li><strong>市场洞察：</strong>精神领袖IP化，粉丝经济与疗愈结合</li>
+                            <li><strong>商业价值：</strong>KOL疗愈内容变现能力强</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4><span class="trend-number">08</span>体验放松</h4>
+                        <ul>
+                            <li><strong>核心特征：</strong>户外徒步、露营，亲近自然</li>
+                            <li><strong>市场洞察：</strong>回归自然成为城市人群刚需</li>
+                            <li><strong>商业价值：</strong>户外经济与疗愈旅游融合发展</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4><span class="trend-number">09</span>贴心陪伴</h4>
+                        <ul>
+                            <li><strong>核心特征：</strong>付费陪子、陪游、陪诊、陪练、陪拍</li>
+                            <li><strong>市场洞察：</strong>陪伴经济兴起，满足情感陪伴需求</li>
+                            <li><strong>商业价值：</strong>个性化服务溢价空间大</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4><span class="trend-number">10</span>宠物疗愈</h4>
+                        <ul>
+                            <li><strong>核心特征：</strong>猫狗双全，动物带给人类治愈的感受</li>
+                            <li><strong>市场洞察：</strong>宠物经济与疗愈深度结合</li>
+                            <li><strong>商业价值：</strong>宠物相关消费持续高增长</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>三、八大消费行为趋势</h3>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>趋势序号</th>
+                            <th>趋势名称</th>
+                            <th>关键词与具体表现</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>倍镜生活</td>
+                            <td>新物种、电子潮穿搭、赛博新康养、高能新电竞、虚拟探险家、一镜入万象</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>秀场新调</td>
+                            <td>玩金新饰、潮玩引力、精雕玩妆、有效护肤、分龄养育、定向精洗、精细护理、男士理容</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>以家为先</td>
+                            <td>以手造物、文创意趣、精奢养宠、文化重装、复古热潮、简装自在、国潮升级、城市漫步</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>无尽之野</td>
+                            <td>山野穿行、小球成潮、极限无界、运动型装、骑行新风</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>科技共生</td>
+                            <td>随身智疗、精细食齐、流动的家、大件隐身、腔调美家、幅波舒眠、智能散宅</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>爱我所爱</td>
+                            <td>味蕾巡游、纯净配料、车旅空间（创意摩旅）</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>慢系疗愈</td>
+                            <td>成分养生、嗅觉疗愈、银发保健、茶疗+疗愈、家居+疗愈、温泉水疗+疗愈</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>在地生活</td>
+                            <td>文化重装、复古热潮、简装自在、国潮升级、城市漫步</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>四、全球十二大疗愈方式概览</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>🔊 声音类疗愈</h4>
+                        <ul>
+                            <li><strong>颂钵疗愈：</strong>通过声音振动与频率共鸣影响人体能量场</li>
+                            <li><strong>铜锣疗愈：</strong>基于声音的振动和穿透力进行疗愈</li>
+                            <li><strong>手碟疗愈：</strong>通过平静的声音和振动促进身心放松</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🏃 运动类疗愈</h4>
+                        <ul>
+                            <li><strong>瑜伽疗愈：</strong>结合体式、呼吸控制和冥想的身心平衡</li>
+                            <li><strong>舞动疗愈：</strong>基于身体和心理紧密相连的理念</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🎨 艺术类疗愈</h4>
+                        <ul>
+                            <li><strong>绘画疗愈：</strong>通过艺术创作促进身心健康</li>
+                            <li><strong>塔罗疗愈：</strong>利用象征意义进行自我探索</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🌿 自然类疗愈</h4>
+                        <ul>
+                            <li><strong>自然疗愈：</strong>通过自然元素激发人体自愈机制</li>
+                            <li><strong>芳香疗愈：</strong>利用植物精油和芳香气息促进身心健康</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🧘 意识类疗愈</h4>
+                        <ul>
+                            <li><strong>冥想疗愈：</strong>通过专注呼吸、内在觉察训练</li>
+                            <li><strong>催眠疗愈：</strong>利用催眠状态促进身心健康</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>💎 能量类疗愈</h4>
+                        <ul>
+                            <li><strong>水晶疗愈：</strong>利用水晶和宝石的能量促进身心健康</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PART2 香水香氛 -->
+            <div class="section" id="perfume-market">
+                <h2><span class="emoji">🌹</span>PART2 香水香氛市场</h2>
+
+                <h3>一、中国消费市场的韧性增长法则</h3>
+
+                <div class="insight-box">
+                    <h4>🎯 核心洞察</h4>
+                    <p>在全球消费市场波动之际，中国以独特的"冰火韧性"推动消费进化：政策刺激与内生增长并行，二线及以下城市消费潜力逐步释放，国际品牌与本土力量携手发展，叠加人本价值回归、文化认同增强、应用场景多元及科技赋能，中国香水香氛行业展现强劲发展潜力，正从"气味交易"向"价值共鸣式消费"演进。</p>
+                </div>
+
+                <h3>市场规模与增长</h3>
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span>2028年市场规模预计</span>
+                        <span class="data-value">339亿元</span>
+                    </div>
+                    <div class="data-item">
+                        <span>2024-2028年复合年增长率</span>
+                        <span class="data-value">8%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>2018-2024年复合年增长率</span>
+                        <span class="data-value">14%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>线下香水香氛2025年同比增速</span>
+                        <span class="data-value">3.7%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>市场份额提升至</span>
+                        <span class="data-value">6.4%</span>
+                    </div>
+                </div>
+
+                <h3>二、中国香水香氛市场消费者行为洞察</h3>
+
+                <div class="highlight-stat">
+                    <span class="number">1.7亿</span>
+                    <span class="label">小红书平台香氛兴趣用户突破</span>
+                </div>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>🎭 穿香漫游：一人千面、一香一面</h4>
+                        <ul>
+                            <li>超40%消费者根据社交活动、日常生活、心情变化等场景选择香水</li>
+                            <li>进阶消费者中60%按心情搭配，30%左右按穿搭/妆容或户外场景选择气味</li>
+                            <li>2024年通勤、旅游场景香水阅读量同比增幅分别达46%、97%</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🔍 蓝海破壁：男性与二线消费者扩容</h4>
+                        <ul>
+                            <li>男性香水消费占比从2023年的37.1%升至2024年的40.1%</li>
+                            <li>二线及以下城市Z世代占比达18.7%，高于一线及新一线城市的12.9%</li>
+                            <li>"务实寻香男"群体注重实用性与功能性</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🧠 认知重构：品牌定义的解构与分类体系演进</h4>
+                        <ul>
+                            <li>"大众香"成为社交安全的嗅觉公约数</li>
+                            <li>"国创香"升维为文化自信的叙事载体</li>
+                            <li>"小众香"演变为圈层身份的解码器</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>三、中国香水香氛产品发展趋势</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>🌟 香氛新纪元：从嗅觉消费到生活解决方案</h4>
+                        <ul>
+                            <li>生活方式迭代催生"场景化香氛刚需"</li>
+                            <li>消费心智升级驱动"功能型香氛"崛起</li>
+                            <li>头部品牌通过嗅觉营销构建"多维IP价值"</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🔄 香氛无界化：产品形态演进驱动香氛生活化渗透</h4>
+                        <ul>
+                            <li>香氛湿巾、衣物喷雾等轻形态产品崛起</li>
+                            <li>多用途香氛产品满足年轻人"随处可香"需求</li>
+                            <li>跨品类产品降低男性用香门槛</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🧬 嗅觉进阶战：解码"上瘾感香调"的文化基因</h4>
+                        <ul>
+                            <li>"记忆型花香"以白玉兰、桂花等东方植物为核心</li>
+                            <li>"疗愈型木香"模拟"古寺焚香"等场景</li>
+                            <li>"反差型瘾香"通过混搭制造张力</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🤖 科技交响：AI时代下的香水创新</h4>
+                        <ul>
+                            <li>研发端：AI缩短调香周期、提升精准度</li>
+                            <li>体验端：游戏化互动装置深化用户理解</li>
+                            <li>运营端：智能选香、数据分析优化库存</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>四、中国香水香氛营销发展趋势</h3>
+
+                <div class="insight-box">
+                    <h4>💡 东方审美营销深度发展</h4>
+                    <p>东方文化升级为品牌核心战略资产，"玄学营销"成为破圈武器，小红书"招财香""桃花香"搜索量激增165%，Anna Su、Versace等国际品牌通过玄学标签让香氛成为社交硬通货。</p>
+                </div>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>🎬 流量破局：品牌的"破圈"四重奏</h4>
+                        <ul>
+                            <li><strong>影视IP：</strong>如雅诗兰黛 x《繁花3》唤醒集体记忆</li>
+                            <li><strong>短剧：</strong>借鉴美妆品牌"爽经济学"</li>
+                            <li><strong>文化符号：</strong>如Labubu绑定谷子经济</li>
+                            <li><strong>IP产品线化：</strong>实现精准产品组合与场景覆盖</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🏪 "非标"性相遇：新场域逻辑</h4>
+                        <ul>
+                            <li>线下空间从交易终端升级为情感交互媒介</li>
+                            <li>非标商业2.0具备"空间破界力""需求穿透力""内容迭代力"</li>
+                            <li>零售竞争从"货架陈列"转向"空间叙事体系构建"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PART3 头皮护理 -->
+            <div class="section" id="scalp-care">
+                <h2><span class="emoji">💆</span>PART3 头皮护理与头发洗护行业</h2>
+
+                <h3>一、核心消费人群画像</h3>
+
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span>女性占比</span>
+                        <span class="data-value">88%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>男性占比</span>
+                        <span class="data-value">12%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>18-24岁核心受众</span>
+                        <span class="data-value">52.4%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>25-29岁核心受众</span>
+                        <span class="data-value">24.6%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>健康的中性头皮占比</span>
+                        <span class="data-value">仅3.7%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>亚健康头皮占比</span>
+                        <span class="data-value">96.3%</span>
+                    </div>
+                </div>
+
+                <h3>头皮状况分布</h3>
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>脂溢性头皮 36.7%</h4>
+                        <p>易出现头皮出油快、异味、头屑增多等问题，常见于熬夜、高油饮食的年轻人群</p>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>敏感头皮 27.7%</h4>
+                        <p>表现为头皮泛红、瘙痒、刺痛，对产品成分耐受性低，偏好温和无刺激配方</p>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>油性头皮 20.8%</h4>
+                        <p>核心痛点是"头发一天就油"，需频繁清洁，对控油、蓬松类产品需求高</p>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>干性头皮 11.1%</h4>
+                        <p>易干燥紧绷、产生干屑，注重头皮补水保湿与屏障修护</p>
+                    </div>
+                </div>
+
+                <h3>二、消费者核心痛点与需求</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>🚨 脱发/掉发</h4>
+                        <div class="highlight-stat">
+                            <span class="number">65.6%</span>
+                            <span class="label">消费者受此困扰</span>
+                        </div>
+                        <ul>
+                            <li>"细软塌发质+熬夜掉发"</li>
+                            <li>"发际线后移""发缝变宽"是主要表现</li>
+                            <li>95后、00后"预防性防脱"需求崛起</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>❄️ 头皮屑</h4>
+                        <div class="highlight-stat">
+                            <span class="number">52.3%</span>
+                            <span class="label">消费者存在头屑问题</span>
+                        </div>
+                        <ul>
+                            <li>分为"油性头屑"和"干性头屑"</li>
+                            <li>对"长效去屑+不刺激头皮"产品接受度高</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>💧 油头</h4>
+                        <div class="highlight-stat">
+                            <span class="number">45.9%</span>
+                            <span class="label">消费者为油性头皮</span>
+                        </div>
+                        <ul>
+                            <li>痛点是"清洁后1-2天就出油"</li>
+                            <li>衍生出"3天不洗头仍清爽"等细分需求</li>
+                            <li>推动控油类产品成为市场主流</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>三、产品选购决策因素</h3>
+
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span>产品功效</span>
+                        <span class="data-value">73.3%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>产品成分</span>
+                        <span class="data-value">66.8%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>使用体验</span>
+                        <span class="data-value">42.8%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>品牌口碑</span>
+                        <span class="data-value">38.1%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>价格/促销</span>
+                        <span class="data-value">29.6%</span>
+                    </div>
+                </div>
+
+                <h3>四、细分人群需求差异</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>👦 青少年群体</h4>
+                        <ul>
+                            <li><strong>成分温和：</strong>偏好"无硅油""无香精"的专用产品</li>
+                            <li><strong>预防脱发：</strong>学业压力导致"早秃"现象增多</li>
+                            <li><strong>便捷使用：</strong>偏好"洗发+护理二合一"产品</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>👩 女性群体</h4>
+                        <ul>
+                            <li><strong>专研配方：</strong>针对"产后脱发""经期头皮敏感"等场景</li>
+                            <li><strong>情绪价值：</strong>80.5%关注"缓解疲劳"，58.3%追求"愉悦感"</li>
+                            <li><strong>颜值需求：</strong>对产品包装、使用场景的"美观度"要求更高</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>👨 男性群体</h4>
+                        <ul>
+                            <li><strong>功效聚焦：</strong>主要关注"控油""去屑""防脱"三大需求</li>
+                            <li><strong>使用便捷：</strong>偏好"快速吸收""无需冲洗"的产品</li>
+                            <li><strong>成分务实：</strong>更信任"科学成分"，对价格敏感度较高</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PART4 体重管理 -->
+            <div class="section" id="weight-management">
+                <h2><span class="emoji">🏃</span>PART4 体重管理食品行业</h2>
+
+                <h3>一、体重管理食品产品格局</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>🥇 销售额TOP3品类</h4>
+                        <div class="data-highlight">
+                            <div class="data-item">
+                                <span>海外膳食营养补充食品</span>
+                                <span class="data-value">38亿元</span>
+                            </div>
+                            <div class="data-item">
+                                <span>蓝帽子保健食品</span>
+                                <span class="data-value">27亿元</span>
+                            </div>
+                            <div class="data-item">
+                                <span>普通膳食营养食品</span>
+                                <span class="data-value">24亿元</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>📈 高增长潜力品类</h4>
+                        <div class="highlight-stat">
+                            <span class="number">140%</span>
+                            <span class="label">传统滋补营养品同比增速</span>
+                        </div>
+                        <p>以"药食同源"为核心，如含荷叶、决明子、茯苓等原料的膏方、茶饮，契合消费者"天然健康减重"的需求。</p>
+                    </div>
+                </div>
+
+                <h3>核心原料分析</h3>
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span>荷叶</span>
+                        <span class="data-value">43.2%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>决明子</span>
+                        <span class="data-value">34.4%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>左旋肉碱</span>
+                        <span class="data-value">29.9%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>泽泻</span>
+                        <span class="data-value">19.2%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>山楂</span>
+                        <span class="data-value">19.2%</span>
+                    </div>
+                </div>
+
+                <h3>二、消费者购买决策与行为特征</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>🎯 核心动机TOP3</h4>
+                        <ul>
+                            <li><strong>为了拥有好身材&改善体型：</strong>63.4%</li>
+                            <li><strong>为了提升身体代谢功能：</strong>55.6%</li>
+                            <li><strong>为了身体更健康：</strong>50.2%</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>⚖️ 性别差异动机</h4>
+                        <ul>
+                            <li><strong>女性：</strong>更关注"提升美丽与自信"（54.4%），孕期/产后体重管理需求突出（20.8%）</li>
+                            <li><strong>男性：</strong>更倾向"配合健身、运动训练目标"（40.8%），需求集中于"增肌减脂"</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🛒 购买渠道与习惯</h4>
+                        <ul>
+                            <li><strong>线上主导：</strong>电商平台占比55.0%</li>
+                            <li><strong>即时性购买：</strong>39.8%倾向"需要时随时购买"</li>
+                            <li><strong>定期性购买：</strong>28.4%已形成"日常定期采购"习惯</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>选购关注点分析</h3>
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span>有利于身体健康</span>
+                        <span class="data-value">63.6%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>成分安全性</span>
+                        <span class="data-value">62.8%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>无添加/少量添加剂</span>
+                        <span class="data-value">62.0%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>配方科学程度</span>
+                        <span class="data-value">45.2%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>食用期间效果明显程度</span>
+                        <span class="data-value">43.2%</span>
+                    </div>
+                </div>
+
+                <h3>三、品牌竞争格局</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>🏆 知名度TOP5品牌</h4>
+                        <ul>
+                            <li><strong>同仁堂：</strong>73.0%</li>
+                            <li><strong>碧生源：</strong>65.0%</li>
+                            <li><strong>仁和：</strong>61.8%</li>
+                            <li><strong>康宝莱：</strong>52.0%</li>
+                            <li><strong>Swisse：</strong>42.2%</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🔄 复购转化TOP3品牌</h4>
+                        <ul>
+                            <li><strong>同仁堂：</strong>27.9%</li>
+                            <li><strong>诺特兰德：</strong>19.6%</li>
+                            <li><strong>Swisse：</strong>18.5%</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <h4>💡 品牌竞争焦点</h4>
+                    <p>当前品牌竞争已不再局限于"谁能减重更快"，而是转向"谁能提供更科学、更可持续的健康体重管理方案"。国产品牌以"药食同源"为核心竞争力，国际品牌以"科学配方+临床背书"为优势，新兴品牌聚焦"细分场景+体验创新"。</p>
+                </div>
+            </div>
+
+            <!-- PART5 小红书美护需求 -->
+            <div class="section" id="beauty-needs">
+                <h2><span class="emoji">💄</span>PART5 小红书美护需求</h2>
+
+                <h3>一、美业变迁：从"美"到"美好"的需求升级</h3>
+
+                <div class="insight-box">
+                    <h4>🎭 品类爆炸：从功能逻辑走向生活逻辑</h4>
+                    <p>当前美护市场已进入"毛孔级"细分阶段，品类围绕具体生活场景深度拆解，告别通用功效内卷。以灵犀美妆赛道为例，4级类目下涌现33个高速增长细分类目，新品类持续诞生。</p>
+                </div>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>💋 睫毛膏精细化</h4>
+                        <p>精细化至9种类型，覆盖不同卷翘度、浓密感需求</p>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>💄 唇釉多样化</h4>
+                        <p>质地与妆效演化出11种细分，匹配不同妆面风格与使用场景</p>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🪃 粉扑功能化</h4>
+                        <p>上妆工具分化出15种形态，适配粉底液、散粉、腮红等不同产品</p>
+                    </div>
+                </div>
+
+                <h3>二、核心方法论：情境需求驱动的用户洞察</h3>
+
+                <h3>解构"变美"的三重维度</h3>
+                <ol>
+                    <li><strong>用户为何渴望变美？</strong>外在场景需求（特定时间、地点、事件的状态展现）+ 内在心理驱动（建立自信、获得认同、取悦自我），二者交织形成"美的情境"</li>
+                    <li><strong>用户心中理想的"美"是什么样的？</strong>无统一标准，围绕"关注部位+风格偏好+色彩质感"多元展开</li>
+                    <li><strong>用户通过哪些途径实现变美？</strong>"护肤品+彩妆"基础上，延伸至生活方式优化，形成"内外兼修"的变美路径</li>
+                </ol>
+
+                <h3>美的驱动：五层需求</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>驱动层级</th>
+                            <th>核心内涵</th>
+                            <th>典型场景</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>外在修饰</td>
+                            <td>身体表面美化，解决刚性需求</td>
+                            <td>基础护肤、遮瑕、发型整理</td>
+                        </tr>
+                        <tr>
+                            <td>身份表达</td>
+                            <td>通过美体现个性、生活方式，构建自我叙事</td>
+                            <td>撕漫男女仿妆、职场气场妆容</td>
+                        </tr>
+                        <tr>
+                            <td>关系建设</td>
+                            <td>以美为媒介，拉近人际距离</td>
+                            <td>闺蜜同步变美、情侣共享护肤</td>
+                        </tr>
+                        <tr>
+                            <td>整体健康</td>
+                            <td>追求身心合一的健康状态，内外兼修</td>
+                            <td>产后修护、在校养气血</td>
+                        </tr>
+                        <tr>
+                            <td>自我仪式</td>
+                            <td>形成生活节奏，建立情绪锚点</td>
+                            <td>睡前Gap Time、秘密香事</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>三、美的进化全景：5大维度10个趋势</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>🎯 外在修饰维度</h4>
+                        <ul>
+                            <li><strong>全域精修：</strong>从"面部聚焦"扩展至全身细节</li>
+                            <li><strong>质感美商：</strong>重视"高级感呈现"</li>
+                            <li><strong>碎片变美：</strong>利用通勤、午休等间隙开展"零食化护理"</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🎭 身份表达维度</h4>
+                        <ul>
+                            <li><strong>高感沉浸：</strong>高端体验从"产品包装"转向"场景互动"</li>
+                            <li><strong>气质中和：</strong>中性美学兴起，美护成为"社会位置拓展"助力</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🤝 关系建设维度</h4>
+                        <ul>
+                            <li><strong>共美无间：</strong>美护成为"亲密关系纽带"</li>
+                            <li><strong>近距离保卫战：</strong>高密度社交场景下的精细化护理</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🌱 整体健康维度</h4>
+                        <ul>
+                            <li><strong>原生美力：</strong>拒绝"遮掩瑕疵"，展现"生命力光泽"</li>
+                            <li><strong>内外兼修：</strong>融合"内服+外养+运动+作息"全维度美养方式</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🎪 自我仪式维度</h4>
+                        <ul>
+                            <li><strong>自我主理：</strong>美护从"社交展示"转向"自我疗愈"</li>
+                            <li><strong>情绪哄学：</strong>美护成为"压力缓解工具"</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>四、核心场景与趋势拆解</h3>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>场景名称</th>
+                            <th>核心用户与需求</th>
+                            <th>市场热点启示</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>打工人"课间十分钟"</td>
+                            <td>职场人利用会议间隙、午休等碎片时间，需"不离开工位"的极速变美方案</td>
+                            <td>便携型产品成新宠：免洗面膜、干洗发喷雾、多功能彩妆盘</td>
+                        </tr>
+                        <tr>
+                            <td>微场景移动化妆间</td>
+                            <td>都市女性在高铁、飞机、车内等"移动场景"高频切换，需"随时补妆/护肤"</td>
+                            <td>小体量、易操作产品受捧：超细雾补水喷雾、按压式保湿凝霜</td>
+                        </tr>
+                        <tr>
+                            <td>全身高光计划</td>
+                            <td>用户从"面部护理"延伸至全身，追求"光影下无死角的通透感"</td>
+                            <td>身体护理精细化：果酸沐浴露、美白身体乳、局部提亮精油</td>
+                        </tr>
+                        <tr>
+                            <td>在家复刻美容院</td>
+                            <td>消费者追求"低成本、高性价比"的专业护理，减少外出时间与成本</td>
+                            <td>家用美容仪市场扩容：超声波导入仪、微电流面罩、多光谱LED面膜</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>五、市场机会与行动建议</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>🛍️ 产品端：聚焦"场景化细分"</h4>
+                        <ul>
+                            <li><strong>小场景切入：</strong>针对"打工人课间十分钟""高铁补妆"等窄场景开发适配产品</li>
+                            <li><strong>跨维度融合：</strong>将"健康功能"与"美护需求"结合</li>
+                            <li><strong>情绪价值附加：</strong>在产品命名、包装、香调上注入"仪式感"</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>📱 营销端：用"场景化内容"触达用户</h4>
+                        <ul>
+                            <li><strong>UGC内容引导：</strong>鼓励用户分享"移动化妆间Vlog""高考爆改前后对比"等真实场景</li>
+                            <li><strong>人设化沟通：</strong>针对"30+人夫""撕漫男女""脆皮女大"等人群打造专属内容</li>
+                            <li><strong>线下体验联动：</strong>结合"在家复刻美容院"场景推出体验套餐</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>📊 数据端：关注"高增长细分赛道"</h4>
+                        <p>以下赛道年增速超30%，需重点跟踪：</p>
+                        <ul>
+                            <li>家用美容仪（微电流、LED类）</li>
+                            <li>便携补妆工具（磁吸分装、迷你粉饼）</li>
+                            <li>男士抗老护理（抗皱面霜、毛囊精华）</li>
+                            <li>女性生理健康产品（月经杯、益生菌卫生巾）</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <h4>💡 总结</h4>
+                    <p>2025年美护市场的核心机会，藏在用户"每一个具体的生活moment"中。从"工位补妆"到"婚礼突击变美"，从"闺蜜同步护肤"到"户外随护"，需求已从"单一功能"转向"场景化+情绪化+健康化"的多元诉求。后续需持续聚焦"人的具体需求"，以"小场景撬动大市场"，才能在品类爆炸时代抢占先机。</p>
+                </div>
+            </div>
+
+            <!-- PART6 高端化妆品市场格局 -->
+            <div class="section" id="luxury-cosmetics">
+                <h2><span class="emoji">🏆</span>PART6 高端化妆品市场格局变化</h2>
+
+                <h3>一、市场现状：护肤普跌/彩妆救场</h3>
+
+                <div class="insight-box">
+                    <h4>🎯 核心洞察</h4>
+                    <p>高端美妆赛道正悄然换挡。欧莱雅、宝洁、联合利华近期发布的2025年上半年财报同时透露一个信号：<strong>护肤品类集体"喊难"，而彩妆却在低迷大盘中逆势走红</strong>。彩妆单价普遍在300-800元区间，相对动辄上千元高端护肤品而言购买门槛相对较低，推新迭代节奏也高于护肤。</p>
+                </div>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>📈 欧莱雅集团表现</h4>
+                        <ul>
+                            <li><strong>YSL美妆、普拉达香水美妆：</strong>在北亚市场表现强劲</li>
+                            <li><strong>高档护肤品类：</strong>表现疲软，需要彩妆品牌抵消</li>
+                            <li><strong>中国大陆市场：</strong>恢复增长，但北亚区销售额同比微降1.1%</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>📊 联合利华业绩</h4>
+                        <ul>
+                            <li><strong>Hourglass彩妆品牌：</strong>双位数增长表现突出</li>
+                            <li><strong>宝拉珍选和德美乐嘉：</strong>出现下滑</li>
+                            <li><strong>REN护肤品牌：</strong>2025年第三季度关闭</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🎨 资生堂彩妆优势</h4>
+                        <ul>
+                            <li><strong>NARS上半年：</strong>录得2%销售额增幅</li>
+                            <li><strong>中国及旅游零售市场：</strong>增长表现优于SHISEIDO和CPB</li>
+                            <li><strong>彩妆vs护肤：</strong>彩妆表现明显强于核心护肤品牌</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>二、渠道变革：从线下专柜到数字化转型</h3>
+
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span>2020年中国线上高端美妆消费</span>
+                        <span class="data-value">首次反超线下</span>
+                    </div>
+                    <div class="data-item">
+                        <span>2025-2027年线上销售额占比预测</span>
+                        <span class="data-value">稳定在64%以上</span>
+                    </div>
+                    <div class="data-item">
+                        <span>SK-II抖音平台30天销售额</span>
+                        <span class="data-value">2500万-5000万元</span>
+                    </div>
+                    <div class="data-item">
+                        <span>SK-II淘系平台上半年GMV</span>
+                        <span class="data-value">13.67亿元</span>
+                    </div>
+                </div>
+
+                <h3>三、品牌表现分析</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>💄 彩妆品牌强势增长</h4>
+                        <ul>
+                            <li><strong>YSL圣罗兰美妆：</strong>抖音彩妆类目销售额TOP3，30天销售额7500万-1亿元</li>
+                            <li><strong>淘系平台表现：</strong>YSL以11亿元GMV蝉联彩妆类目榜首</li>
+                            <li><strong>NARS彩妆：</strong>2025上半年录得2%销售额增幅</li>
+                            <li><strong>Hourglass：</strong>2025上半年达成双位数增长</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🧴 护肤品牌承压</h4>
+                        <ul>
+                            <li><strong>雅诗兰黛集团：</strong>一季度护肤品类下滑12%</li>
+                            <li><strong>莱珀妮：</strong>2025上半年全球销售额有机下降10.7%</li>
+                            <li><strong>联合利华：</strong>宝拉珍选和德美乐嘉销售额出现下滑</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>📱 数字化转型成功案例</h4>
+                        <ul>
+                            <li><strong>SK-II：</strong>品牌自营占比38%，达人推广占比20%</li>
+                            <li><strong>宝洁投资：</strong>大力投资抖音平台调整营销策略</li>
+                            <li><strong>莱珀妮：</strong>得益于电商业务36%增幅，中国二季度增长3%</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>四、奢侈品美妆现状</h3>
+
+                <div class="highlight-stat">
+                    <span class="number">-3%</span>
+                    <span class="label">2021-2024年中国高端美妆市场复合增长率</span>
+                </div>
+
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span>开云集团美妆业务</span>
+                        <span class="data-value">增长9%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>LVMH集团香水化妆品部</span>
+                        <span class="data-value">下滑4%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>爱马仕香水及化妆品部</span>
+                        <span class="data-value">下滑3.8%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>全球奢侈化妆品市场2023年规模</span>
+                        <span class="data-value">505亿美元</span>
+                    </div>
+                </div>
+
+                <h3>五、市场机遇与挑战</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>🔥 新品牌入局</h4>
+                        <ul>
+                            <li><strong>LV美妆：</strong>2025年3月宣布进军美妆领域</li>
+                            <li><strong>产品线：</strong>55款唇膏、10款润唇膏、8款眼影</li>
+                            <li><strong>创意总监：</strong>Pat McGrath担任美妆创意总监</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🌟 竞争环境变化</h4>
+                        <ul>
+                            <li><strong>消费者理性：</strong>护肤品牌营销重点转向科学传播</li>
+                            <li><strong>国货冲击：</strong>传统高端护肤品牌遭遇国货品牌显著冲击</li>
+                            <li><strong>彩妆优势：</strong>推新迭代节奏高，通过不断推新制造购买理由</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>💡 未来发展方向</h4>
+                        <ul>
+                            <li><strong>渠道调整：</strong>考验国际大牌的调整速度</li>
+                            <li><strong>高端概念：</strong>"高端"的概念和10年、20年前已不一样</li>
+                            <li><strong>市场机遇：</strong>至2030年高端消费将贡献超过45%的社会消费品零售总额</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- PART7 丝芙兰市场分析 -->
+            <div class="section" id="sephora-analysis">
+                <h2><span class="emoji">🏪</span>PART7 丝芙兰市场分析：巨亏超10亿的下坡路</h2>
+
+                <h3>一、2025年上半年业绩表现</h3>
+
+                <div class="insight-box">
+                    <h4>🎯 核心数据</h4>
+                    <p>高端美妆零售巨头丝芙兰交出的2025年上半年成绩单依然揪心：<strong>总营收为34.44亿元，同比下降12.3%，合计净亏损1.20亿元</strong>，相比去年同期的0.94亿元亏损持续扩大。而丝芙兰从2022年陷入亏损以来，三年半时间累计亏损已达10.96亿元人民币。</p>
+                </div>
+
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span>2025年上半年营收</span>
+                        <span class="data-value">34.44亿元</span>
+                    </div>
+                    <div class="data-item">
+                        <span>营收同比变化</span>
+                        <span class="data-value">-12.3%</span>
+                    </div>
+                    <div class="data-item">
+                        <span>2025年上半年净亏损</span>
+                        <span class="data-value">1.20亿元</span>
+                    </div>
+                    <div class="data-item">
+                        <span>三年半累计亏损</span>
+                        <span class="data-value">10.96亿元</span>
+                    </div>
+                </div>
+
+                <h3>二、近几年业绩变化趋势分析</h3>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>年份</th>
+                            <th>营收(亿元)</th>
+                            <th>营收同比</th>
+                            <th>净利润(亿元)</th>
+                            <th>利润同比</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2020年</td>
+                            <td>92.64</td>
+                            <td>-3.37%</td>
+                            <td>4.32</td>
+                            <td>-31.25%</td>
+                        </tr>
+                        <tr>
+                            <td>2021年</td>
+                            <td>108.77</td>
+                            <td>17.41%</td>
+                            <td>4.31</td>
+                            <td>-0.23%</td>
+                        </tr>
+                        <tr>
+                            <td>2022年</td>
+                            <td>85.46</td>
+                            <td>-21.43%</td>
+                            <td>-1.90</td>
+                            <td>-143.98%</td>
+                        </tr>
+                        <tr>
+                            <td>2023年</td>
+                            <td>87.60</td>
+                            <td>2.5%</td>
+                            <td>-1.40</td>
+                            <td>-26.3%</td>
+                        </tr>
+                        <tr>
+                            <td>2024年</td>
+                            <td>71.4</td>
+                            <td>-18.5%</td>
+                            <td>-6.46</td>
+                            <td>-361.4%</td>
+                        </tr>
+                        <tr>
+                            <td>2025年上半年</td>
+                            <td>34.44</td>
+                            <td>-12.3%</td>
+                            <td>-1.20</td>
+                            <td>/</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>三、高层频繁变动</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>💼 2024年关键人事变动</h4>
+                        <ul>
+                            <li><strong>1月19日：</strong>前大中华区总经理陈冰正式离任</li>
+                            <li><strong>4月15日：</strong>任命丁霞为大中华区总经理</li>
+                            <li><strong>年底：</strong>亚洲区总裁Alia Gogi辞职</li>
+                            <li><strong>8月：</strong>中国裁员120人，约占中国市场全体员工的3%</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>👥 2025年继续调整</h4>
+                        <ul>
+                            <li><strong>3月13日：</strong>首席执行官Guillaume Motte亲自负责中国区运营</li>
+                            <li><strong>8月底：</strong>大中华区首席运营官周影衍(Lily Zhou)卸任</li>
+                            <li><strong>新任COO：</strong>Christophe Ravier接任，此前担任路易威登中东首席财务官</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>📉 其他业务调整</h4>
+                        <ul>
+                            <li><strong>2023年1月：</strong>关闭营业仅三年的天猫海外旗舰店</li>
+                            <li><strong>品牌退出：</strong>过去数年近30个品牌退出合作</li>
+                            <li><strong>2024-2025年：</strong>约10个品牌退出</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>四、丝芙兰中国发展历程回顾</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>🚀 辉煌起点(2005-2020年)</h4>
+                        <ul>
+                            <li><strong>2005年4月：</strong>在上海淮海中路开设首家中国零售精品店</li>
+                            <li><strong>2009年：</strong>北京前门大街开设中国首家旗舰店</li>
+                            <li><strong>核心优势：</strong>高端定位、稀缺性选品、独特零售模式</li>
+                            <li><strong>独家品牌：</strong>长期贡献销售额约30-40%</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>⚡ 转折时刻(2020年)</h4>
+                        <ul>
+                            <li><strong>国货崛起：</strong>完美日记、花西子等品牌快速发展</li>
+                            <li><strong>新型集合店：</strong>调色师、WOW COLOUR等新玩家涌现</li>
+                            <li><strong>疫情冲击：</strong>线下零售受到影响</li>
+                            <li><strong>渠道多元化：</strong>独家品牌优势被削弱</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🔄 自救尝试(2021-2025年)</h4>
+                        <ul>
+                            <li><strong>全渠道转型：</strong>构建9大平台电商矩阵</li>
+                            <li><strong>下沉市场：</strong>2021年新开38家门店</li>
+                            <li><strong>拥抱国货：</strong>"就耀中国造"品牌发光计划</li>
+                            <li><strong>大众化尝试：</strong>2024年优时颜入驻50家门店</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>五、竞争对手快速崛起</h3>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>项目</th>
+                            <th>融资时间</th>
+                            <th>轮次/金额</th>
+                            <th>简介</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>KK集团</td>
+                            <td>2020年7月</td>
+                            <td>E轮 10亿元</td>
+                            <td>美妆集合店品牌THE COLORIST调色师母公司</td>
+                        </tr>
+                        <tr>
+                            <td>WOW COLOUR</td>
+                            <td>2020年1月</td>
+                            <td>战略投资 10亿元</td>
+                            <td>时尚美妆集合店品牌</td>
+                        </tr>
+                        <tr>
+                            <td>HARMAY话梅</td>
+                            <td>2020年11月</td>
+                            <td>A+轮 金额未披露</td>
+                            <td>高端化妆品电商平台</td>
+                        </tr>
+                        <tr>
+                            <td>水研社</td>
+                            <td>2020年7月</td>
+                            <td>Pre-A轮 金额未披露</td>
+                            <td>研族及健康管理服务商</td>
+                        </tr>
+                        <tr>
+                            <td>NOISY Beauty</td>
+                            <td>2020年2月</td>
+                            <td>Pre-A轮 1000万元</td>
+                            <td>美妆产品提供商</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>六、面临的核心挑战</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>💰 价格竞争劣势</h4>
+                        <ul>
+                            <li><strong>价格偏高：</strong>日常售价高于品牌专柜</li>
+                            <li><strong>促销有限：</strong>促销活动受会员等级限制</li>
+                            <li><strong>客单价差异：</strong>丝芙兰动辄上千，调色师、KKV客单价多在百元左右</li>
+                            <li><strong>性价比劣势：</strong>难以吸引"低成本试错"的年轻消费群体</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🗣️ 口碑与体验问题</h4>
+                        <ul>
+                            <li><strong>投诉增多：</strong>2023年相关投诉内容多达2571条</li>
+                            <li><strong>退换货问题：</strong>未履行7天无理由退货、货不对板等</li>
+                            <li><strong>服务压力：</strong>柜哥柜姐贴身服务令年轻人压力倍增</li>
+                            <li><strong>体验落后：</strong>门店体验亟待优化</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>📱 营销能力不足</h4>
+                        <ul>
+                            <li><strong>内容单调：</strong>主要发布品牌TVC内容，缺乏互动</li>
+                            <li><strong>科普缺失：</strong>对店内品牌及产品缺乏体系化介绍</li>
+                            <li><strong>消费者洞察：</strong>未能满足成分党等新兴需求</li>
+                            <li><strong>公域营销：</strong>在年轻人聚集的社交平台表现欠缺</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>七、市场环境与机遇分析</h3>
+
+                <div class="highlight-stat">
+                    <span class="number">-3%</span>
+                    <span class="label">2021-2024年中国高端美妆市场复合增长率</span>
+                </div>
+
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span>2024年中国高端美妆市场规模</span>
+                        <span class="data-value">2364亿元</span>
+                    </div>
+                    <div class="data-item">
+                        <span>相比2021年下跌</span>
+                        <span class="data-value">214亿元</span>
+                    </div>
+                    <div class="data-item">
+                        <span>丝芙兰中国门店数量</span>
+                        <span class="data-value">324家</span>
+                    </div>
+                    <div class="data-item">
+                        <span>独家品牌销售额贡献</span>
+                        <span class="data-value">30-40%</span>
+                    </div>
+                </div>
+
+                <h3>八、未来发展思考</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>🎯 品牌矩阵创新</h4>
+                        <ul>
+                            <li><strong>国货布局：</strong>加大对优质国货品牌的引入和扶持</li>
+                            <li><strong>价格梯度：</strong>构建更丰富的价格层次满足不同消费群体</li>
+                            <li><strong>独家合作：</strong>重新定义独家品牌的价值和稀缺性</li>
+                            <li><strong>新锐发掘：</strong>更早发现和培育有潜力的新品牌</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🛍️ 零售体验优化</h4>
+                        <ul>
+                            <li><strong>服务模式：</strong>学习"轻BA化"服务，减少消费压力</li>
+                            <li><strong>场景设计：</strong>打造更符合年轻人喜好的购物环境</li>
+                            <li><strong>自主购物：</strong>提供更多自主选择和试用机会</li>
+                            <li><strong>数字化升级：</strong>线上线下一体化体验提升</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>📢 品牌叙事重构</h4>
+                        <ul>
+                            <li><strong>内容营销：</strong>加强与消费者的双向互动</li>
+                            <li><strong>专业科普：</strong>满足成分党等细分群体需求</li>
+                            <li><strong>口碑管理：</strong>重视消费者反馈和口碑建设</li>
+                            <li><strong>年轻化传播：</strong>学习新型集合店的营销策略</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <h4>💡 总结展望</h4>
+                    <p>丝芙兰的困境反映了传统高端美妆零售在新消费时代面临的共同挑战。<strong>消费祛魅、理性觉醒</strong>的背景下，仅仅依靠渠道差异化和品牌稀缺性已难以维持竞争优势。未来丝芙兰需要在品牌矩阵创新、零售体验优化、品牌叙事重构等方面下功夫，真正理解和满足新一代消费者的需求，才能重新赢得市场的认可。</p>
+                </div>
+            </div>
+
+            <!-- PART8 韩妆市场热点趋势 -->
+            <div class="section" id="korean-beauty">
+                <h2><span class="emoji">🇰🇷</span>PART8 韩妆市场热点趋势分享</h2>
+
+                <h3>一、韩妆市场整体概况</h3>
+
+                <div class="insight-box">
+                    <h4>🎯 市场地位与影响力</h4>
+                    <p>韩妆作为全球美妆行业的"趋势风向标"，2024年市场规模达250亿美元，位列全球第五。<strong>人均年消费493美元（全球第一）</strong>，化妆品出口额达93.5亿美元，其早期消费者追捧的趋势往往会辐射全球，对品牌产品开发、市场布局具有重要参考价值。</p>
+                </div>
+
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span>2024年韩妆市场规模</span>
+                        <span class="data-value">250亿美元</span>
+                    </div>
+                    <div class="data-item">
+                        <span>人均年消费</span>
+                        <span class="data-value">493美元（全球第一）</span>
+                    </div>
+                    <div class="data-item">
+                        <span>化妆品出口额</span>
+                        <span class="data-value">93.5亿美元</span>
+                    </div>
+                    <div class="data-item">
+                        <span>Naver月均搜索量</span>
+                        <span class="data-value">1090万次</span>
+                    </div>
+                    <div class="data-item">
+                        <span>2024-2025年搜索同比增长</span>
+                        <span class="data-value">26.7%</span>
+                    </div>
+                </div>
+
+                <h3>二、护肤趋势：成分驱动+功能细分</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>🧬 PDRN成分爆发</h4>
+                        <div class="highlight-stat">
+                            <span class="number">58.9%</span>
+                            <span class="label">PDRN相关搜索量同比增长</span>
+                        </div>
+                        <ul>
+                            <li><strong>月均搜索量：</strong>7.8万次</li>
+                            <li><strong>功效定位：</strong>主打"修护+抗老"</li>
+                            <li><strong>形态分布：</strong>PDRN安瓶(2.68万次)、PDRN面霜(3200次)</li>
+                            <li><strong>趋势：</strong>植物源PDRN搜索量环比增长300%</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>💧 面部精华安瓶领先</h4>
+                        <div class="highlight-stat">
+                            <span class="number">31.1万次</span>
+                            <span class="label">月均搜索量，16.1%增长</span>
+                        </div>
+                        <ul>
+                            <li><strong>热门成分：</strong>海葡萄安瓶(24.5万次/月)</li>
+                            <li><strong>代表品牌：</strong>WELLAGE(2.62万次)、VARI:H(1.8万次)</li>
+                            <li><strong>核心策略：</strong>"单一成分高浓度"为卖点</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🌿 再生面霜双需求</h4>
+                        <div class="highlight-stat">
+                            <span class="number">17.07万次</span>
+                            <span class="label">月均搜索量，22.6%增长</span>
+                        </div>
+                        <ul>
+                            <li><strong>关联需求：</strong>痘痘(1600次)、痘疤(970次)、屏障(140次)</li>
+                            <li><strong>产品特色：</strong>强调"专家背书"</li>
+                            <li><strong>代表品牌：</strong>Mild Lab蓝积雪草修护霜</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>护肤高增长品类TOP5</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>品类名称</th>
+                            <th>月搜索量</th>
+                            <th>同比增速</th>
+                            <th>核心驱动因素</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>固体喷雾</td>
+                            <td>1.3K</td>
+                            <td>30100%</td>
+                            <td>形态创新：便携不渗漏，适合通勤、旅行</td>
+                        </tr>
+                        <tr>
+                            <td>荧光棒唇膏</td>
+                            <td>5.0K</td>
+                            <td>18000%</td>
+                            <td>场景化设计：兼具功能与趣味外观</td>
+                        </tr>
+                        <tr>
+                            <td>绿番茄洁面</td>
+                            <td>1.6K</td>
+                            <td>12300%</td>
+                            <td>成分靶向：控油收毛孔，针对油痘肌</td>
+                        </tr>
+                        <tr>
+                            <td>LED痘痘贴</td>
+                            <td>430</td>
+                            <td>9900%</td>
+                            <td>科技赋能：LED红光消炎+物理吸附</td>
+                        </tr>
+                        <tr>
+                            <td>泛醇保湿霜</td>
+                            <td>21.8K</td>
+                            <td>6900%</td>
+                            <td>温和高效：适配敏感肌、医美术后</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>三、彩妆趋势：质地护肤化+形态便捷化</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>💧 无胶假睫毛爆发</h4>
+                        <div class="highlight-stat">
+                            <span class="number">529%</span>
+                            <span class="label">同比增长，月搜15.9万次</span>
+                        </div>
+                        <ul>
+                            <li><strong>核心创新：</strong>"自带黏合剂，沾水即贴"</li>
+                            <li><strong>解决痛点：</strong>涂胶麻烦、易过敏、新手难上手</li>
+                            <li><strong>代表品牌：</strong>Coringco Toktok Hara</li>
+                            <li><strong>复购率：</strong>28%，连续6个月Gmarket彩妆TOP1</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🌸 液体腮红稳占C位</h4>
+                        <div class="highlight-stat">
+                            <span class="number">15.1万次</span>
+                            <span class="label">月搜索量，日常妆教程出现频率78%</span>
+                        </div>
+                        <ul>
+                            <li><strong>核心优势：</strong>"妆效自然+护肤结合"</li>
+                            <li><strong>关联搜索：</strong>水光液体腮红(6.8万次)、保湿液体腮红(4.2万次)</li>
+                            <li><strong>代表产品：</strong>A'Pieu Juicy Pang水光液体腮红</li>
+                            <li><strong>添加成分：</strong>西瓜提取物+玻尿酸</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>✨ 高光细分需求</h4>
+                        <div class="highlight-stat">
+                            <span class="number">32.4万次</span>
+                            <span class="label">月搜索量，"局部精准提亮"成趋势</span>
+                        </div>
+                        <ul>
+                            <li><strong>细分品类：</strong>哑光高光(8000次)、蓝色高光(2700次)</li>
+                            <li><strong>头部品牌：</strong>GLINT BEAUTY(15万次/月)领跑</li>
+                            <li><strong>应用场景：</strong>粉色提亮眼下、蓝色修饰T区</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>彩妆高增长品类TOP5</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>品类名称</th>
+                            <th>月搜索量</th>
+                            <th>同比增速</th>
+                            <th>核心亮点</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>液体妆前乳</td>
+                            <td>850</td>
+                            <td>1100%</td>
+                            <td>质地轻薄+护肤功效，适配干敏肌上妆</td>
+                        </tr>
+                        <tr>
+                            <td>无胶假睫毛</td>
+                            <td>15.9K</td>
+                            <td>529%</td>
+                            <td>免胶水设计，省时且不伤睫毛</td>
+                        </tr>
+                        <tr>
+                            <td>粉色遮瑕</td>
+                            <td>570</td>
+                            <td>120.6%</td>
+                            <td>色调适配，中和暗沉、提亮眼下</td>
+                        </tr>
+                        <tr>
+                            <td>膏状高光</td>
+                            <td>390</td>
+                            <td>98%</td>
+                            <td>膏状易推开，贴合肌肤不卡粉</td>
+                        </tr>
+                        <tr>
+                            <td>唇部妆前乳</td>
+                            <td>1.3K</td>
+                            <td>95.5%</td>
+                            <td>含神经酰胺、维E，改善唇部干燥</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>四、美护服务趋势：非侵入式医美崛起</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>⚡ Potenza射频微针</h4>
+                        <div class="highlight-stat">
+                            <span class="number">35.6%</span>
+                            <span class="label">YoY增长，月搜67.2万次</span>
+                        </div>
+                        <ul>
+                            <li><strong>核心原理：</strong>"射频能量+微针导入"</li>
+                            <li><strong>主要功效：</strong>刺激胶原再生（抗老）+疏通毛孔（控油）</li>
+                            <li><strong>关联搜索：</strong>价格(5.1万次)、效果(4.5万次)、毛孔(2.8万次)</li>
+                            <li><strong>设备供应商：</strong>Cynosure（赛诺秀）</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🔊 Ultherapy超声刀</h4>
+                        <div class="highlight-stat">
+                            <span class="number">33.1%</span>
+                            <span class="label">YoY增长，月搜195.6万次</span>
+                        </div>
+                        <ul>
+                            <li><strong>核心优势：</strong>"深层提拉，无恢复期"</li>
+                            <li><strong>作用原理：</strong>聚焦超声作用于筋膜层</li>
+                            <li><strong>适用人群：</strong>30+有下颌线模糊、法令纹加深</li>
+                            <li><strong>关联搜索：</strong>效果维持(8.2万次)、间隔时间(4.3万次)</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🧪 BioRePeel生物剥脱</h4>
+                        <div class="highlight-stat">
+                            <span class="number">82.5%</span>
+                            <span class="label">YoY增长，月搜510次</span>
+                        </div>
+                        <ul>
+                            <li><strong>核心特点：</strong>"温和剥脱，无结痂"</li>
+                            <li><strong>创新机制：</strong>通过生物酶去除老废角质</li>
+                            <li><strong>目标人群：</strong>敏感肌和怕恢复期人群</li>
+                            <li><strong>年龄分布：</strong>主要为20-25岁</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>美护服务高增长项目TOP5</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>服务项目</th>
+                            <th>月搜索量</th>
+                            <th>同比增速</th>
+                            <th>核心优势</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>生物焕肤(BioRepeel)</td>
+                            <td>510</td>
+                            <td>82.5%</td>
+                            <td>非剥脱式，温和去角质，无恢复期</td>
+                        </tr>
+                        <tr>
+                            <td>PDO线雕</td>
+                            <td>465</td>
+                            <td>36.8%</td>
+                            <td>可吸收PDO线，紧致轮廓，恢复期3-5天</td>
+                        </tr>
+                        <tr>
+                            <td>Potenza激光治疗</td>
+                            <td>67.2K</td>
+                            <td>35.6%</td>
+                            <td>射频+微针结合，控油收毛孔+刺激胶原</td>
+                        </tr>
+                        <tr>
+                            <td>超声刀(Ultherapy)</td>
+                            <td>195.6K</td>
+                            <td>33.1%</td>
+                            <td>深层提拉，无创伤、无恢复期</td>
+                        </tr>
+                        <tr>
+                            <td>面部轮廓管理</td>
+                            <td>675</td>
+                            <td>32.0%</td>
+                            <td>结合玻尿酸填充，打造自然流畅轮廓</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>五、市场机会与行动建议</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>🛍️ 产品端策略</h4>
+                        <ul>
+                            <li><strong>护肤领域：</strong>布局PDRN、海葡萄、绿番茄等热门成分</li>
+                            <li><strong>形态创新：</strong>固体喷雾、LED痘痘贴，结合便携性+科技感</li>
+                            <li><strong>彩妆领域：</strong>推动护肤化彩妆，液体妆前乳添加保湿成分</li>
+                            <li><strong>便捷形态：</strong>跟进无胶假睫毛、磁吸睫毛</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>📱 营销端策略</h4>
+                        <ul>
+                            <li><strong>科学叙事：</strong>明确成分起效原理、临床数据</li>
+                            <li><strong>场景绑定：</strong>关联医美后修护、熬夜急救等场景</li>
+                            <li><strong>专家背书：</strong>强化医疗级功效认知</li>
+                            <li><strong>内容营销：</strong>在Naver、TikTok发布测评教程</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🌍 全球化布局</h4>
+                        <ul>
+                            <li><strong>优先市场：</strong>针对日本、美国推出韩妆同源产品</li>
+                            <li><strong>本土化适配：</strong>欧美市场推植物源PDRN，规避动物成分争议</li>
+                            <li><strong>气候适配：</strong>东南亚市场强化控油、防晒功能</li>
+                            <li><strong>K-Beauty标签：</strong>结合韩妆标签营销，吸引韩妆爱好者</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <h4>💡 总结</h4>
+                    <p>2025年韩妆市场的核心机会在于<strong>"精准化、科技化、自然化"</strong>：护肤端以PDRN、海葡萄等成分实现"靶向修护"，彩妆端通过"液/膏质地"与"便捷形态"平衡妆效与体验，美护服务端聚焦"非侵入式医美"降低消费门槛。这些趋势不仅是韩国本土需求的体现，更可能成为全球美护市场的"下一个热点"。</p>
+                </div>
+            </div>
+
+            <!-- PART9 更年期美容市场 -->
+            <div class="section" id="menopause-beauty">
+                <h2><span class="emoji">🌸</span>PART9 更年期美容市场</h2>
+
+                <h3>一、近万亿元"幽灵市场"！谁在抢滩6300万女性的金矿？</h3>
+
+                <div class="insight-box">
+                    <h4>🎯 市场概述</h4>
+                    <p>"更年期美容与保健"对于国内的消费者和美业人而言，或许仍是一个较为陌生的话题。但在海外，这一风潮早已兴起。在过去的五年里，欧美等地的美容从业者一直试图借更年期的热潮谋求发展，但结果喜忧参半。如今，新一批入局品牌正试图通过拥抱雌激素、抓住逐渐步入更年期的千禧一代以及利用远程医疗系统来寻求成功。</p>
+                </div>
+
+                <div class="highlight-stat">
+                    <span class="number">1310亿美元</span>
+                    <span class="label">2025年美国更年期健康市场估值（约合人民币9411亿元）</span>
+                </div>
+
+                <div class="highlight-stat">
+                    <span class="number">6300万</span>
+                    <span class="label">美国女性消费者涵盖</span>
+                </div>
+
+                <h3>二、"美容"＆"更年期"：互相矛盾还是相辅相成？</h3>
+
+                <p>长久以来，"美容"与"健康"一直被医学界及美容业视为密不可分。但在更年期这一领域，两者的联系尤为紧密。科莱特·考蒂安指出，现下的更年期消费者既需要产品提供来自内分泌系统的支持，也需要产品拥有改善容貌和情绪的能力。</p>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>🏢 零售商布局</h4>
+                        <ul>
+                            <li><strong>Ulta Beauty：</strong>推出更年期美容与健康品牌Joylux，扩展至300家实体门店</li>
+                            <li><strong>Walgreens：</strong>发布广告重新定义更年期形象，打出#更年期正当红口号</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🧪 雌激素护肤品回归</h4>
+                        <ul>
+                            <li>在20世纪早中期曾经流行，后因监管政策消失</li>
+                            <li>近期卷土重来，Alloy公司将M4雌激素护肤系列扩展为多产品线</li>
+                            <li>Respin推出激素远程医疗服务，计划推出雌激素护肤品</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>💊 远程医疗整合</h4>
+                        <ul>
+                            <li>如Alloy等美妆健康公司正试图在远程医疗、更年期美容和护肤等领域之间打通渠道</li>
+                            <li>通过信息技术手段实现医疗服务的远程提供</li>
+                            <li>挖掘更年期美容护肤商机</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>三、"更年期"仍是敏感词？</h3>
+
+                <p>尽管跃跃欲试者众，但美妆品牌能否成功地将更年期与美容相结合仍然有待商榷——第一批"吃螃蟹"开拓该领域的品牌中，已有不少倒闭或不得不"重启"。</p>
+
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span>State of Menopause</span>
+                        <span class="data-value">2023年关闭</span>
+                    </div>
+                    <div class="data-item">
+                        <span>Pause Well-Aging</span>
+                        <span class="data-value">2024年歇业</span>
+                    </div>
+                    <div class="data-item">
+                        <span>Stripes</span>
+                        <span class="data-value">50万美元拍卖</span>
+                    </div>
+                    <div class="data-item">
+                        <span>Pepper & Wits</span>
+                        <span class="data-value">更名为Kindra</span>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <h4>💡 营销策略转变</h4>
+                    <p>"早期的更年期美容健康品牌在营销中对'更年期'这个词的使用有点过于热情，也过于频繁了。"如今同僚们已经采取了不同的营销方式，强调积极衰老(positive ageing)，而不是把'更年期'挂在嘴边。市场上涌现了许多专注于更年期的品牌，这让消费者觉得'好吧，难道我现在只剩下我的更年期值得被关注吗？'</p>
+                </div>
+
+                <h3>四、主流美妆品牌的入局策略</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>🔬 成分创新路径</h4>
+                        <ul>
+                            <li><strong>宝拉珍选：</strong>推出植物雌激素弹力新生精华液</li>
+                            <li><strong>欧莱雅薇姿：</strong>推出"Neovadiol更年期前日间面霜"</li>
+                            <li><strong>主要成分：</strong>植物雌激素、氨基酸、山茶籽油、海洋胶原蛋白等</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>👥 目标人群定位</h4>
+                        <ul>
+                            <li>避免直接使用"更年期"标签</li>
+                            <li>定位为面向X世代或"熟龄肌"的品牌</li>
+                            <li>针对千禧一代的更年期前阶段展开营销</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>📈 市场机遇</h4>
+                        <ul>
+                            <li>随着明星及KOL带货效应减弱偏见</li>
+                            <li>投资者看好需求未被充分满足的消费群体</li>
+                            <li>零售商需求驱动品类发展</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PART10 染发膏品类分析 -->
+            <div class="section" id="hair-dye-market">
+                <h2><span class="emoji">🎨</span>PART10 染发膏品类分析</h2>
+
+                <h3>一、年轻染亮中年染黑，温和天然最重要！</h3>
+
+                <div class="insight-box">
+                    <h4>🎯 市场概况</h4>
+                    <p>在颜值经济与银发浪潮的双重驱动下，中国染发市场热度持续攀升。而染发膏凭借其能"在家就能染"的便利性受到大批消费者的青睐。目前，染发膏的消费群体主要分为两大阵营：Z世代与中老年群体。</p>
+                </div>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>👶 Z世代群体特征</h4>
+                        <ul>
+                            <li>将染发视为自我表达的一种方式</li>
+                            <li>追求鲜艳、靓丽等个性化发色</li>
+                            <li>注重产品的时尚感和潮流元素</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>👨‍🦳 中老年群体特征</h4>
+                        <ul>
+                            <li>以"遮盖白发"为核心诉求</li>
+                            <li>更看重染发后的自然质感</li>
+                            <li>对产品的安全性要求更高</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span>2025上半年淘天平台GMV</span>
+                        <span class="data-value">13.14亿元</span>
+                    </div>
+                    <div class="data-item">
+                        <span>京东平台GMV</span>
+                        <span class="data-value">4.47亿元</span>
+                    </div>
+                    <div class="data-item">
+                        <span>抖音平台GMV</span>
+                        <span class="data-value">超10亿元</span>
+                    </div>
+                    <div class="data-item">
+                        <span>抖音平台增长率</span>
+                        <span class="data-value">69.7%</span>
+                    </div>
+                </div>
+
+                <h3>二、监管政策与行业规范</h3>
+
+                <div class="insight-box">
+                    <h4>⚖️ 政策导向</h4>
+                    <p>2025年7月31日，中检院发布了《染发化妆品研究技术指导原则（试行）（征求意见稿）》等系列文件，对染发化妆品的名称以及标签做出了明确规定。产品中文名称不得使用引人误解的产品名称，例如"植物染发"；产品标签应标上安全警示用语，且不得使用"植物染发""安全""温和""一洗黑"等引人误解、夸大、绝对化的表述。</p>
+                </div>
+
+                <h3>三、淘天染发膏品类品牌榜："高价少量、低价放量"</h3>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>排名</th>
+                            <th>品牌</th>
+                            <th>销售额（万）</th>
+                            <th>成交均价（元）</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>昌义生态</td>
+                            <td>16299</td>
+                            <td>71.56</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>施华蔻</td>
+                            <td>16044</td>
+                            <td>56.46</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>巴黎欧莱雅</td>
+                            <td>8405</td>
+                            <td>79.04</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>美源</td>
+                            <td>3721</td>
+                            <td>56.57</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>三橡树</td>
+                            <td>3714</td>
+                            <td>87.32</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>四、抖音染发膏品类品牌榜：市场结构健康多元</h3>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>排名</th>
+                            <th>品牌</th>
+                            <th>销售额（万）</th>
+                            <th>成交均价（元）</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>彩夕</td>
+                            <td>10000+</td>
+                            <td>50-100</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>侗染</td>
+                            <td>10000+</td>
+                            <td>10-50</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>OKCS</td>
+                            <td>10000+</td>
+                            <td>50-100</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>韩愢</td>
+                            <td>10000+</td>
+                            <td>50-100</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>施华蔻</td>
+                            <td>7500-10000</td>
+                            <td>50-100</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>五、重点品牌分析</h3>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>🎨 巴黎欧莱雅：领跑彩染品牌</h4>
+                        <ul>
+                            <li><strong>核心产品：</strong>"水洗出色系列""双膏染发霜系列"</li>
+                            <li><strong>主要卖点：</strong>"炫色""氨基酸""高显色""不易泛黄"</li>
+                            <li><strong>色彩策略：</strong>按"冷-暖"色调区分"低调-前卫"发色</li>
+                            <li><strong>成交均价：</strong>79.04元，成功站位"高端平价化"空白带</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🌿 美源：多年历史沉淀</h4>
+                        <ul>
+                            <li><strong>品牌历史：</strong>HOYU株式会社1905年成立，美源品牌1957年开始研发染发产品</li>
+                            <li><strong>核心优势：</strong>"低刺激气味""家用便捷操作""操作便捷""染色均匀""花香淡雅"</li>
+                            <li><strong>价格策略：</strong>锚定50元-80元主流升级价位</li>
+                            <li><strong>护发理念：</strong>"山茶籽油""海洋胶原蛋白""茶氨酸"等护发因子</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>💡 染立方：植萃速染实现高价高销</h4>
+                        <ul>
+                            <li><strong>核心策略：</strong>"无氨、无对苯二胺、无酒精"的三无安全配方</li>
+                            <li><strong>创新产品：</strong>男士一梳黑，3分钟快速上色</li>
+                            <li><strong>营销亮点：</strong>"不沾头皮"实验营销，#一梳黑挑战话题播放量破亿</li>
+                            <li><strong>价格定位：</strong>100元-200元价位段，实现"高价高销"</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>⭐ OKCS：偶像同款+高性价比</h4>
+                        <ul>
+                            <li><strong>营销策略：</strong>与翟潇闻等明星IP绑定，实现信任转嫁</li>
+                            <li><strong>价格优势：</strong>39元高性价比定位</li>
+                            <li><strong>内容营销：</strong>聚焦使用后颜值提升、气质飞跃的效果呈现</li>
+                            <li><strong>目标群体：</strong>精准瞄准年轻消费群体，打造潮流生活方式体验</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>六、市场趋势与未来展望</h3>
+
+                <div class="insight-box">
+                    <h4>📊 核心趋势</h4>
+                    <p>通过对2025年上半年染发膏品类榜单的分析，染发市场正呈现出"需求分层精细化"与"渠道格局重构"的鲜明特征。基础的"遮盖白发"诉求仍是中老年群体的核心刚需，但"时尚潮色"与"植物养护"趋势显著崛起，同时，成分安全、植物温和、头皮健康等需求日益凸显，推动品类向"科学染发护发方案"演进。</p>
+                </div>
+
+                <div class="trend-grid">
+                    <div class="trend-card">
+                        <h4>🔄 需求分层精细化</h4>
+                        <ul>
+                            <li>基础遮盖白发需求稳定</li>
+                            <li>时尚潮色需求崛起</li>
+                            <li>植物养护概念兴起</li>
+                            <li>成分安全要求提高</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🏪 渠道格局重构</h4>
+                        <ul>
+                            <li>淘天、京东稳定发展</li>
+                            <li>抖音平台爆发增长</li>
+                            <li>"短视频+直播+算法"赋能</li>
+                            <li>平台差异化竞争态势清晰</li>
+                        </ul>
+                    </div>
+
+                    <div class="trend-card">
+                        <h4>🎯 竞争核心要素</h4>
+                        <ul>
+                            <li>功效精准化</li>
+                            <li>体验便捷化</li>
+                            <li>场景细分化</li>
+                            <li>"人群×成分×形式"三维解决方案</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <h3>📊 数据来源与说明</h3>
+                <p>本报告基于《2025年美护需求洞察白皮书-小红书》、《2025年头皮护理行业消费趋势报告-艺恩》、《2025年中国香水香氛行业白皮书-德勤》、《2025体重管理消费超势洞察报告》等市场报告整理分析</p>
+                <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">
+                    本资料基于行业市场报告整理分析，仅供内部学习交流使用。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 导航功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const sections = document.querySelectorAll('.section');
+            const navToggle = document.getElementById('navToggle');
+            const navSidebar = document.getElementById('navSidebar');
+
+            // 导航点击事件
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+
+                        // 移动端自动关闭导航
+                        if (window.innerWidth <= 1024) {
+                            navSidebar.classList.remove('open');
+                        }
+                    }
+                });
+            });
+
+            // 移动端导航切换
+            navToggle.addEventListener('click', function() {
+                navSidebar.classList.toggle('open');
+            });
+
+            // 点击主内容区关闭导航
+            document.querySelector('.main-content').addEventListener('click', function() {
+                if (window.innerWidth <= 1024) {
+                    navSidebar.classList.remove('open');
+                }
+            });
+
+            // 滚动时高亮当前章节
+            function updateActiveNav() {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (window.pageYOffset >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('href') === '#' + current) {
+                        item.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveNav);
+            updateActiveNav();
+        });
+    </script>
+</body>
+</html>
